@@ -204,6 +204,9 @@ def create_robotikI():
         reserv = datetime.datetime.strptime(data['Date'], "%Y %m %d %H %M")
         if not reserv.minute%(duration_robotiki/60) == 0:
             return jsonify(resp='Dies ist keine reguläre Buchungszeit.', success=False)
+        if 'Evaluation' in data['Lab']:
+            return jsonify(resp="Der Versuchsstand muss zur Evaluation nicht gebucht werden. Sie können stattdessen den Fragebogen unter 'Lösung > Evaluation' aufrufen.",
+                success=False)
         lab = [int(s) for s in data['Lab'].split() if s.isdigit()][0]
         labs = conn_robotikI.get_labs(user)
         reservations = conn_robotikI.get_reservations(user)
