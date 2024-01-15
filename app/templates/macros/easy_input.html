@@ -1,0 +1,27 @@
+{%- macro checkbox(index, default="",text="") -%}
+<input type="checkbox" id="{{ index }}" binary {{ default }}><label>{{ text }}</label>
+{%- endmacro %}
+
+{%- macro number_input(index, length, unit, text, number="number") -%}
+<label>{{ text }} &nbsp</label><input class="{{ number }}" type="number" step="any" id="{{ index }}"
+    maxlength="{{ length }}" size="{{ length }}" parameter><label>\(\left[{{ unit }}\right]\)</label>
+{%- endmacro %}
+
+{%- macro text_input(index, length, unit, text, number="number") -%}
+<label>{{ text }} &nbsp</label><input class="{{ number }}" type="text" id="{{ index }}" maxlength="{{ length }}"
+    size="{{ length }}" parameter><label>\(\left[{{ unit }}\right]\)</label>
+{%- endmacro %}
+
+{%- macro radio(index,default,text,name) -%}
+<fieldset>
+    {% for in in index %}
+    <input type="radio" id="{{ in }}" name="{{ name }}" {{ default[loop.index0] }} binary><label>{{ text[loop.index0]
+        }}</label>
+    {% endfor %}
+</fieldset>
+{%- endmacro %}
+
+{%- macro sg_input(id, length, unit, text, number="number") -%}
+<label>{{ text }} &nbsp</label><input class="{{ number }}" type="text" id="{{ id }}" maxlength="{{ length }}"
+    size="{{ length }}" parameter><label>\(\left[{{ unit }}\right]\)</label>
+{%- endmacro %}

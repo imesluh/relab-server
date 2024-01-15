@@ -1,0 +1,138 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% import '/macros/groups.html' as groups %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/RobotikII/lab3/stream.js"></script>
+<script type="text/javascript" src="/static/js/lib/jquery.bootstrap-touchspin.js"></script>
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="/static/css/lib/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
+<link rel="stylesheet" href="/static/css/custom/crosshair.css">
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream">
+                <svg id=cross1 width="120" height="120" viewBox="0 0 120 120" style="display:none;">
+                    <polyline points="70,60 110,60" fill="none" stroke="black" stroke-width="3" />
+                    <polyline points="50,60 10,60" fill="none" stroke="black" stroke-width="3" />
+                    <circle cx="60" cy="60" r="30" stroke="black" stroke-width="3" fill="none" />
+                    <polyline points="60,50 60,10" fill="none" stroke="black" stroke-width="3" />
+                    <polyline points="60,70 60,110" fill="none" stroke="black" stroke-width="3" />
+                    <text x="98" y="52" font-family="Times New Roman" font-size="20px">x</text>
+                    <text x="66" y="105" font-family="Times New Roman" font-size="20px">y</text>
+                </svg>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=1,links=['Delta','TCP'],native_value=1,id='camera_select') }}
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=1,links=['high','low (VPN)'],native_value=1,id='stream_select') }}
+            </div>
+        </div>
+    </div>
+    <div id="control_panel" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="panel panel-default" id="panel_eig_val">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span id="gly_exer1" class="glyphicon glyphicon-edit"></span> Visual Servoing<a class="pull-right"
+                        id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            {{ boxes.help('Laden Sie sich den Screenshot herunter und bestimmen Sie die Distanz in karteischen Roboterachskoordinaten \(\Delta_\mathrm{x}\) und \(\Delta_\mathrm{y}\), die  zum Ursprung zurückgelegt werden muss.') }}
+                        </div>
+                    </div>
+                    <div class="row" style="height:45px;">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            <div class="pull-right">
+                                <label>\(\Delta_\mathrm{x}\) &nbsp</label><input class="number config" type="text"
+                                    id="dx" maxlength="9" size="8" gtp><label>\(\si{\milli\metre}\)</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-0"></div>
+                    </div>
+                    <div class="row" style="height:45px;">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            <div class="pull-right">
+                                <label>\(\Delta_\mathrm{y}\) &nbsp</label><input class="number config" type="text"
+                                    id="dy" maxlength="9" size="8" gtp><label>\(\si{\milli\metre}\)</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-0"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="btn-group btn-group-lg" role="group">
+                                {{ buttons.button('download1','Download',size="download",gly='glyphicon-download') }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="pull-right">
+                                <div class="btn-group btn-group-lg" role="group">
+                                    <button id="start1" type="button" class="btn btn-primary start">Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script>
+var data = []
+</script>
+<script src="/static/js/custom/RobotikII/custom.js"></script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/RobotikII/websocket.js"></script>
+<script src="/static/js/custom/RobotikII/lab3/lab3.js"></script>
+<script src="/static/js/custom/RobotikII/lab3/crossHairs.js"></script>
+{% endblock %}

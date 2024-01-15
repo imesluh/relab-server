@@ -1,0 +1,20 @@
+{"labs":
+[
+	{},
+	{},
+	{},
+	{"Polvorgabe":
+	[
+		{ "class": "pole", "name":"Polstellen", "label": "True", "groups":["\\(P_1\\)", "\\(P_2\\)", "\\(P_3\\)", "\\(P_4\\)"]}
+	],
+		"Rueckfuehrung":
+		[
+			{ "class": "k_rueck", "name":"Rückführung", "label": "True", "groups":["\\(K_1\\)", "\\(K_2\\)", "\\(K_3\\)", "\\(K_4\\)"]}
+		],
+		"Vorfilter":
+		[
+			{ "class": "vorfilter", "name":"Vorfilter", "label": "False", "groups":["v1"]}
+		]
+	}
+]
+}

@@ -1,0 +1,16 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="/static/js/jquery.min.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+<script>
+	var msg = {{ data| safe }}['msg']
+	if (msg !== false) { alert(msg); };
+	window.location = {{ data | safe }}['url'];
+</script>

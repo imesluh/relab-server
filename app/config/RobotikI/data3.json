@@ -1,0 +1,55 @@
+[{
+	"name": "q_\\mathrm{1}",
+	"unit": "\\si{°}",
+	"color": "blue",
+	"range": ["-180","180"]
+	},
+	{
+	"name": "q_\\mathrm{2}",
+	"unit": "\\si{°}",
+	"color": "green",
+	"range": ["-180","180"]
+	},
+	{
+	"name": "q_\\mathrm{3}",
+	"unit": "\\si{°}",
+	"color": "grey",
+	"range": ["-130","130"]
+	},
+	{
+	"name": "q_\\mathrm{4}",
+	"unit": "\\si{°}",
+	"color": "red",
+	"range": ["-180","180"]
+	},
+	{
+	"name": "q_\\mathrm{5}",
+	"unit": "\\si{°}",
+	"color": "yellow",
+	"range": ["-100","100"]
+	},
+	{
+	"name": "q_\\mathrm{6}",
+	"unit": "\\si{°}",
+	"color": "brown",
+	"range": ["-180","180"]
+	},
+	{
+	"name": "x_\\mathrm{E}",
+	"unit": "\\si{\\milli\\metre}",
+	"color": "orange",
+	"range": ["-500","500"]
+	},
+	{
+	"name": "y_\\mathrm{E}",
+	"unit": "\\si{\\milli\\metre}",
+	"color": "pink",
+	"range": ["-500","500"]
+	},
+	{
+	"name": "z_\\mathrm{E}",
+	"unit": "\\si{\\milli\\metre}",
+	"color": "black",
+	"range": ["0","1000"]
+	}
+]

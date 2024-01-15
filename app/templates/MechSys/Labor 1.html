@@ -1,0 +1,256 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 1{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Das Ziel dieses Laborversuchs ist die Implementierung einer Kaskadenregelung zur
+								Positionsregelung des Schlittens, bestehend aus einem PI Geschwindigkeitsregler (innerer
+								Regelkreis) und einem P-Regler zur Positionsregelung (äußerer Regelkreis). Bei der
+								Kaskadenregedlung werden die Regelkreise von innen (schneller Regelkreis) nach außen
+								(langsamer Regelkreis) eingestellt, sodass für den äußeren Regelkreis die Regeldifferenz
+								des inneren Regelkreises nahezu Null ist. In dieser Kaskadenregelung wird daher für den
+								Positionsregler angenommen, dass die gewünschte Geschwindigkeit sofort eingestellt
+								werden kann. Das resultierende Signalflussdiagramm kann dem folgenden Bild entnommen
+								werden.</p>
+							<img src="/static/img/MechSys/Lab1_kaska.jpg" width=100%
+								style="margin-top:30px; margin-bottom:30px">
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p> In dieser Aufgabe parametrieren Sie einen Geschwindigkeitsregler für den Schlitten des
+								inversen Pendels. Der Regler besteht aus einem P- und einem I-Anteil, die mit dem
+								Verstärkungsfaktor \(K_\mathrm{p}\) und der Nachhaltezeit \(\frac{1}{T_\mathrm{N}}\)
+								eingestellt werden können. Das Ziel ist die Einstellfaktoren so zu wählen, dass folgende
+								Kriterien erfüllt werden:</p>
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-5">
+									{{ img_show.img_show('/static/img/MechSys/Labor11.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-7">
+									<div class="row">
+										<div class="col-lg-3 col-md-4 col-sm-4">
+											<p>Überschwingweite \((v_\mathrm{m})\):</p>
+										</div>
+										<div class="col-lg-9 col-md-8 col-sm-8">
+											\(7\%\)
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 col-sm-4">
+											<p>Einschwingzeit \((T_\mathrm{s})\):</p>
+										</div>
+										<div class="col-lg-9 col-md-8 col-sm-8">
+											\(100 \si{\milli\second} \), mit einem Toleranzbereich von \(2\Delta
+											V_\mathrm{s} = 0.05\si[per-mode = fraction] {\metre\per\second} \)
+										</div>
+									</div>
+									<p>Sie können Ihren Geschwindigkeitsregler mit einem Geschwindigkeitstrapezprofil
+										\((0.5\si[per-mode = fraction] {\metre\per\second} )\) testen. Die Bewegung wird
+										sowohl vorwärts als auch rückwärts ausgeführt. Anschließend erhalten Sie das
+										Feedback zur Regelgüte (Mittelwert aus beiden Bewegungen) und können die
+										gemessenen Daten im csv-Format durch einen Klick auf "Download" herunterladen.
+										In der ersten Spalte ist die Zeit in Sekunden aufgetragen, in der zweiten die
+										Ist-Geschwindigkeit in \(\si[per-mode = fraction] {\metre\per\second} \) und in
+										der dritten die Soll-Geschwindigkeit in \(\si[per-mode = fraction]
+										{\metre\per\second} \). Sind die oben genannten Kriterien erfüllt, können Sie
+										den Geschwindigkeitsregler mit einem Klick auf "Accept" übernehmen. Wollen Sie
+										die Parametrierung wieder anpassen, drücken Sie "Change". Sie können sich je
+										nach Labor unterschiedliche Messgrößen in dem Echtzeitgraph anziegen lassen.
+										Wählen Sie diese über die Schaltflächen an den Achsen aus. Sie können den
+										Achsbereich ändern, indem Sie die gewünschten Werte oben und unten in die
+										Eingabefelder eintragen un mit der Taste "Enter" bestätigen. </p>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row">
+									<div class="col-xs-2"></div>
+									<div class="col-xs-3">
+										<p>Überschwingweite \((v_\mathrm{m})\):</p>
+									</div>
+									<div class="col-xs-7">
+										\(7\%\)
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-2"></div>
+									<div class="col-xs-3">
+										<p>Einschwingzeit time \((T_\mathrm{s})\):</p>
+									</div>
+									<div class="col-xs-7">
+										\(100 \si{\milli\second} \) mit einem Toleranzbereich von \(2\Delta V_\mathrm{s}
+										= 0.05\si[per-mode = fraction] {\metre\per\second} \)
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										{{ img_show.img_show('/static/img/MechSys/Labor11.png',"400px") }}
+									</div>
+									<div class="container-fluid col-xs-12">
+										<p>Sie können Ihren Geschwindigkeitsregler mit einem
+											Geschwindigkeitstrapezprofil \((0.5\si[per-mode = fraction]
+											{\metre\per\second} )\) testen. Die Bewegung wird sowohl vorwärts als auch
+											rückwärts ausgeführt. Anschließend erhalten Sie das Feedback zur Regelgüte
+											(Mittelwert aus beiden Bewegungen) und können die gemessenen Daten im
+											csv-Format durch einen Klick auf "Download" herunterladen. In der ersten
+											Spalte ist die Zeit in Sekunden aufgetragen, in der zweiten die
+											Ist-Geschwindigkeit in \(\si[per-mode = fraction] {\metre\per\second} \) und
+											in der dritten die Soll-Geschwindigkeit in \(\si[per-mode = fraction]
+											{\metre\per\second} \). Sind die oben genannten Kriterien erfüllt, können
+											Sie den Geschwindigkeitsregler mit einem Klick auf "Accept" übernehmen.
+											Wollen Sie die Parametrierung wieder anpassen, drücken Sie "Change".</p>
+									</div>
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Aufgabe 2</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Nachdem der Geschwindigkeitsregler parametriert ist, wird der P-Positionsregler
+								eingestellt. Die zu erfüllenden Kriterien sind:</p>
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-5">
+									{{ img_show.img_show('/static/img/MechSys/Labor12.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-7">
+									<div class="row">
+										<div class="col-lg-3 col-md-4 col-sm-4">
+											<p>Überschwingweite \((v_\mathrm{m})\):</p>
+										</div>
+										<div class="col-lg-9 col-md-8 col-sm-8">
+											\(1\%\)
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 col-sm-4">
+											<p>Einschwingzeit \((T_\mathrm{s})\):</p>
+										</div>
+										<div class="col-lg-9 col-md-8 col-sm-8">
+											\(200 \si{\milli\second} \) mit einem Toleranzbereich von \(2\Delta
+											V_\mathrm{s} = 0.03\si{m} \)
+										</div>
+									</div>
+									<p>Sie können Ihren Positionsregler mit einer Positionierung auf \(0.15\si{m} \)
+										mittels eines Geschwindigkeitstrapezprofils testen. Auch diese Bewegung wird
+										vorwärts und rückwärts ausgeführt und die Regelgüte aus beiden Bewegungen
+										ermittelt. Sie können die gemessenen Daten durch einen Klick auf "Download"
+										herunterladen. Dabei ist in der ersten Spalte die Zeit in Sekunden, in der
+										zweiten die Ist-Position in \(\si{\metre} \) und in der dritten die
+										Soll-Position in \(\si{\metre} \) aufgetragen. Sind die Kriterien erfüllt,
+										erhalten Sie für die Güte der Positionsregelung eine Punktzahl. Diese berechnet
+										sich aus:</p>
+
+
+									\[
+									\begin{aligned}
+									score&= \frac{1000}{3}\left(5 -
+									\frac{T_\mathrm{s}}{40}\right)\left(\frac{v_\mathrm{m}^2}{10} - 1.1v_\mathrm{m} +1
+									\right)
+									\end{aligned}
+									\]
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row">
+									<div class="col-xs-2"></div>
+									<div class="col-xs-3">
+										<p>Überschwingweite \((v_\mathrm{m})\):</p>
+									</div>
+									<div class="col-xs-7">
+										\(2\%\)
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-2"></div>
+									<div class="col-xs-3">
+										<p>Einschwingzeit \((T_\mathrm{s})\):</p>
+									</div>
+									<div class="col-xs-7">
+										\(200 \si{\milli\second} \) mit einem Toleranzbereich von \(2\Delta V_\mathrm{s}
+										= 0.03\si{m} \)
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										{{ img_show.img_show('/static/img/MechSys/Labor12.png',"400px") }}
+									</div>
+									<div class="container-fluid col-xs-12">
+										<p>Sie können Ihren Positionsregler mit einer Positionierung auf \(0.15\si{m} \)
+											mittels eines Geschwindigkeitstrapezprofils testen. Auch diese Bewegung wird
+											vorwärts und rückwärts ausgeführt und die Regelgüte aus beiden Bewegungen
+											ermittelt. Sie können die gemessenen Daten durch einen Klick auf "Download"
+											herunterladen. Dabei ist in der ersten Spalte die Zeit in Sekunden, in der
+											zweiten die Ist-Position in \(\si{\metre} \) und in der dritten die
+											Soll-Position in \(\si{\metre} \) aufgetragen.</p>
+										<p>
+											Als Challenge gilt es nun ihre Geschwindigkeits- und Positionsregelung
+											dahingehend zu optimieren, dass die Positionierung sowohl schnell als auch
+											genau erfolgt. Also \(T_\mathrm{s}\) und \(v_\mathrm{m}\) möglichst klein
+											werden. Dabei ist die Gewichtung der Überschwingweite etwas stärker.</p>
+									</div>
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

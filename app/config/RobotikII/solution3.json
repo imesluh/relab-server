@@ -1,0 +1,32 @@
+[{
+	"header": "Kamerakalibrierung",
+	"text": ["Geben Sie bitte Ihre ermittelten Kalibrierungsparameter der Kamera",
+                  "in die entsprechenden Felder ein.",
+                  "Benutzen Sie dabei einen Punkt zur Darstellung von Dezimalzahlen:"],
+    "values":
+	[{
+		"name": "f_\\mathrm{x}",
+		"id": "fx",
+		"unit": "\\si[per-mode = fraction] {px\\per\\milli\\metre}",
+		"number": "number"
+	},
+	{	"name": "f_\\mathrm{y}",
+		"id": "fy",
+		"unit": "\\si[per-mode = fraction] {px\\per\\milli\\metre}",
+		"number": "number"
+	},
+	{
+		"name": "c_\\mathrm{x}",
+		"id": "cx",
+		"unit": "\\si{px}",
+		"number": "number"
+	},
+	{
+		"name": "c_\\mathrm{y}",
+		"id": "cy",
+		"unit": "\\si{px}",
+		"number": "number"
+	}],
+	"size": "short"
+	}
+]

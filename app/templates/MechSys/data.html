@@ -1,0 +1,56 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+{% endblock %}
+{% block title %}Technische Daten{% endblock %}
+{% block content %}
+<div class="panel-body">
+	<table id="ranking" class="table" style="text-align:center;">
+		<thead>
+			<tr>
+				<th style="text-align:center;">Zeichen</th>
+				<th style="text-align:center;">Name</th>
+				<th style="text-align:center;">Wert</th>
+				<th style="text-align:center;">Einheit</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{ lists.data_row('m_{E}','Masse der schwingenden Elektrode','2.4','\si{\milli\gram}') }}
+			{{ lists.data_row('\epsilon_{r}','Permittivität','1','1') }}
+			{{ lists.data_row('\epsilon_{0}','Elektrische Feldkonstante','8.85 \cdot 10^{-12}','\si[per-mode = fraction]
+			{\\A\second\per\V\metre}') }}
+			{{ lists.data_row('A','Fläche der jeweiligen Elektroden','7.06','\si{\square\milli\metre}') }}
+			{{ lists.data_row('d','Abstand der Elektroden im Ruhezustand','5','\si{\micro\metre}') }}
+			{{ lists.data_row('k_{ges}','Gesamtfedersteifigkeit Elektrodenaufhängung','110','\si[per-mode = fraction]
+			{\\N\per\metre}') }}
+			{{ lists.data_row('u','Umrechnungsfaktor der Auswerteelektronik','-3.6','\si[per-mode = fraction]
+			{\V\per\pico\F}') }}
+			{{ lists.data_row('r','Radius der Riemenscheibe der Linearführung','0.011935','\si{m}') }}
+			{{ lists.data_row('m_\mathrm{w}','Masse des Schlittens','1.1251','\si{kg}') }}
+			{{ lists.data_row('r_\mathrm{1}','innerer Radius des Pendels','0.009','\si{m}') }}
+			{{ lists.data_row('r_\mathrm{2}','äußerer Radius des Pendels','0.01','\si{m}') }}
+			{{ lists.data_row('\\rho','Dichte der Aluminiumlegierung des Pendels','2850','\si[per-mode = fraction]
+			{\kilo\gram\per\cubic\metre}') }}
+			{{ lists.data_row('g','Erdbeschleunigung','9.81','\si[per-mode = fraction] {\metre\per\square\second}') }}
+
+
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+{% block own_js %}
+{% endblock %}

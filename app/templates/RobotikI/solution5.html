@@ -1,0 +1,48 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/buttons.html' as buttons %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script>var mainroute = '/RobotikI/rest/be/SI';</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/solution.css">
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+{% endblock %}
+{% block title %}Evaluation{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="col-lg-2 hidden-md hidden-sm hidden-xs"></div>
+	<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+		{% for exercise in values %}
+		{{ forms.eval_input(exercise.header, exercise.descr, exercise["quests"]) }}
+		{% endfor %}
+	</div>
+	<div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
+		{{ buttons.button(id="send_eval", text="Senden", gly="glyphicon-envelope", style="position: absolute; bottom: 0;
+		margin-bottom:15px; left: 0;") }}
+	</div>
+</div>
+<div class="visible-xs-block">
+	<div class="row">
+		{{ buttons.button(id="send_eval", text="Senden", gly="glyphicon-envelope", style="margin-bottom:15px; position:
+		relative; left: 50%;") }}
+	</div>
+</div>
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/custom/RobotikI/send_solution.js"></script>
+{% endblock %}

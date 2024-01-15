@@ -1,0 +1,6 @@
+.table th, .table td { 
+	border-top: none !important;    
+ 	}
+.table > tbody > tr > td {
+	vertical-align: middle;
+	}

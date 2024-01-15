@@ -1,0 +1,11 @@
+{
+	"Calendar": {
+		"Dates": 1,
+		"Duration": 30
+	},
+	"Labs": [{"name":"Labor 1","solution":0},
+		{"name":"Labor 2","solution":0},
+		{"name":"Labor 3","solution":1},
+		{"name":"Labor 4","solution":0},
+		{"name":"Evaluation 5","solution":1}]
+}

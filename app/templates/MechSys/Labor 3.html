@@ -1,0 +1,361 @@
+{% extends "MechSys/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+{% endblock %}
+{% block title %}Labor 3{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Das übergeordnete Ziel dieser Aufgabe ist die Identifikation verschiedener Parameter des
+								bzgl. der unteren Gleichgewichtslage linearisierten Differentialgleichungssystems
+
+								\[
+								\begin{aligned}
+								\ddot{\varphi}&=\frac{1}{J_\mathrm{p}+\frac{l^2}{4}m_\mathrm{p}}\left(-\frac{1}{2}lm_\mathrm{p}\ddot{x}-\frac{1}{2}lm_\mathrm{p}g\left(\varphi-\pi\right)-d_\mathrm{p}\dot{\varphi}\right)\\
+								\ddot{x}&=\frac{1}{m_\mathrm{w}}F_\mathrm{a}-\mu g\text{ }
+								\mathrm{sign}(\dot{x})-\frac{d_\mathrm{lin}}{m_\mathrm{w}}\dot{x}
+								\end{aligned}
+								\]
+								des inversen Pendels. Namentlich sind das:
+							<ul>
+								<li>Aufgabe 1: coulombsche und viskose Reibung der Linearführung (\(\mu\) und
+									\(d_\mathrm{lin}\))</li>
+								<li>Aufgabe 2: Länge \(l\), Masse \(m_\mathrm{p}\) und viskose Lagerreibung
+									\(d_\mathrm{p}\) des Pendels</li>
+								<li>Challenge: Schreiben einer Dämpfungsfunktion \(D(\varphi,\dot{\varphi})\) in der
+									Differentialgleichung
+									\[
+									\ddot{\varphi}=\frac{1}{J_\mathrm{p}+\frac{l^2}{4}m_\mathrm{p}}\left(-\frac{1}{2}lm_\mathrm{p}\ddot{x}-\frac{1}{2}lm_\mathrm{p}g\left(\varphi-\pi\right)-D(\varphi,\dot{\varphi})\right)
+									,\]
+									die das reale Pendel möglichst genau abbildet.
+								</li>
+							</ul>
+							Sie können Ihre ermittelten Werte nach dem erfolgreichen Durchführen der Versuche unter dem
+							Reiter "Lösungen" übermitteln (max. 7 Versuche). Sie müssen dafür im Laborversuch beide
+							Aufgabenteile vollständig bearbeitet haben. Also alle Trapezprofile gefahren sein und alle
+							Ausschwingversuche absolviert haben.
+							Die Symbolbilder des Versuchsstandes sind unten zu finden. Links ist die Linearführung mit
+							Schlitten und Pendel dargestellt, rechts ein Querschnitt durch das Pendel. Wie zu sehen
+							handelt es sich um einen Hohlzylinder. Nehmen Sie vereinfachend an, dass das Pendel an einem
+							Ende aufgehängt ist, sodass sich kein Material oberhalb der Pendellagerung befindet.
+							<img src="/static/img/symbole.jpg" width=100%>
+							<p>Bevor Sie beginnen sollten Sie überprüfen, ob der Winkelssensor richtig kalibriert ist.
+								Ist der Winkel nicht \(\pi\) drücken Sie bitte auf "Reset" um den Winkelsensor neu zu
+								kalibrieren.</p>
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<h4> Anforderungen an die Profile</h4>
+							<p> In dieser Aufgabe erstellen Sie Geschwindigkeitstrapezprofile für den Schlitten, um die
+								Dämpfungskoeffizienten der Linearachse
+								zu bestimmen. Die Geschwindigkeitsprofile müssen in der aus der Vorlesung bekannten Form
+								(vgl. Vorlesungsskript "Mechatronische Systeme" Abs 2.2.5):
+								\[v(t)=\begin{cases}
+								\begin{array}{lll}
+								a_{\mathrm{0}_\mathrm{1}} + a_{\mathrm{1}_\mathrm{1}}t , & 0\le t \le t_\mathrm{1} &
+								(\mathrm{I}) \\
+								a_{\mathrm{0}_\mathrm{2}} , & t_\mathrm{1} \le t \le t_\mathrm{2} & (\mathrm{II}) \\
+								a_{\mathrm{0}_\mathrm{3}} + a_{\mathrm{1}_\mathrm{3}}(t-t_\mathrm{2}) , & t_\mathrm{2}
+								\le t \le t_\mathrm{e} & (\mathrm{III})
+								\end{array}
+								\end{cases}\]
+							<p> übermittelt werden. Das Geschwindigkeitsprofil unterteilt sich dabei in eine
+								Beschleunigungsphase \((\mathrm{I})\), eine Plateau-Phase mit konstanter Geschwindigkeit
+								\((\mathrm{II})\) und einer Abbremsphase \((\mathrm{III})\).
+							</p>
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<img src="/static/img/MechSys/trapez.jpg" width="100%">
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<p>Folgende Anforderungen müssen von Ihren Profilen erfüllt werden:
+									<ul>
+										<li>Es sollen drei Profile erstellt werden, deren konstante Geschwindigkeiten im
+											Bereich \(\mathrm{II}\) \(0.1\si[per-mode = fraction] {\metre\per\second}
+											\), \(0.2\si[per-mode = fraction] {\metre\per\second} \) und
+											\(0.4\si[per-mode = fraction] {\metre\per\second} \) betragen.</li>
+										<li>Die konstante Geschwindigkeit muss mindestens \(0.5\si{\second} \) gehalten
+											werden.</li>
+										<li>Der Wagen startet an der Position \(x = -0.2\si{\metre} \) und muss durch
+											das Geschwindigkeitsprofil genau die Position \(x = 0.2\si{\metre} \)
+											erreichen.</li>
+										<li>Der Wagen startet aus dem Stillstand und muss zum Ende des Profils ebenfalls
+											zum Stehen kommen.</li>
+										<li>Die maximal zulässige Dauer der Profile beträgt \(10\si{\second} \).</li>
+										<li>Die maximal zulässige Beschleunigung beträgt \(9\si[per-mode = fraction]
+											{\metre\per\square\second} \).</li>
+									</ul>
+									Um nicht in Zeitnot zu geraten, bietet es sich an, die Parameter der Profile schon
+									vor Beginn Ihrer Versuchszeit zu berechnen.
+									</p>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<img src="/static/img/MechSys/trapez.jpg" width="100%">
+									<p>Folgende Anforderungen müssen von Ihren Profilen erfüllt werden:
+									<ul>
+										<li>Es sollen drei Profile erstellt werden, deren konstante Geschwindigkeiten im
+											Bereich \(\mathrm{II}\) \(0.1\si[per-mode = fraction] {\metre\per\second}
+											\), \(0.2\si[per-mode = fraction] {\metre\per\second} \) und
+											\(0.4\si[per-mode = fraction] {\metre\per\second} \) betragen.</li>
+										<li>Die konstante Geschwindigkeit muss mindestens \(0.5\si{\second} \) gehalten
+											werden.</li>
+										<li>Der Wagen startet an der Position \(x = -0.2\si{\metre} \) und muss durch
+											das Geschwindigkeitsprofil genau die Position \(x = 0.2\si{\metre} \)
+											erreichen.</li>
+										<li>Der Wagen startet aus dem Stillstand und muss zum Ende des Profils ebenfalls
+											zum Stehen kommen.</li>
+										<li>Die maximal zulässige Dauer der Profile beträgt \(10\si{\second} \).</li>
+										<li>Die maximal zulässige Beschleunigung beträgt \(9\si[per-mode = fraction]
+											{\metre\per\square\second} \).</li>
+									</ul>
+									Um nicht in Zeitnot zu geraten, bietet es sich an, die Parameter der Profile schon
+									vor Beginn Ihrer Versuchszeit zu berechnen.
+									</p>
+								</div>
+							</div>
+							<h4>Ablauf des Versuchs</h4>
+							<p>
+								Ihr übergebenes Profil wird sowohl vorwärts als auch rückwärts abgefahren, sodass die
+								Ausgansposition wieder erreicht wird.
+								Als Messwerte erhalten Sie eine csv-Tabelle zum Download, die in der ersten Spalte die
+								Zeit in Sekunden, in der zweiten die Geschwindigkeit des Schlittens in \(\si[per-mode =
+								fraction] {\metre\per\second} \) und in der dritten Spalte das Drehmoment des
+								Synchronmotors in \(\si{\newton\metre} \) enthält. Aus diesen Daten für alle drei
+								Profile können Sie den coulombschen und viskosen Reibparameter der Linearführung
+								bestimmen. Überlegen Sie dafür zuerst, ob Sie die Differentialgleichung des Schlittens
+								für den vorhandenen Fall vereinfachen können. Anschließend sollten Sie die
+								Kraft-Geschwindigkeits-Kennlinie der Linearführung erstellen, aus der Sie die
+								geforderten Reibparameter bestimmen können. Nutzen Sie dafür auch die gegebenen Größen
+								des Versuchsstandes, zu finden im Hauptmenü unter "Informationen" und "Daten".
+							</p>
+							<h4>Erklärung der Steuerungselemente</h4>
+							<div class="container-fluid">
+								<div class="row row-eq-height hidden-xs">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+										{{ img_show.img_show('/static/img/MechSys/Labor31.png') }}
+									</div>
+									<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<p>Links sehen Sie die Bedienoberfläche für die erste Aufgabe. Sie können in der
+											Eingabemaske die jeweiligen Parameter ihres Profils eingeben und durch einen
+											Klick auf "Start" mit dem Versuch beginnen. Sollten die oben genannten
+											Anforderungen nicht erfüllt sein, erhalten Sie eine Fehlerrückmeldung und
+											können Ihr Profil verbessern. Nachdem das Profil vorwärts und rückwärts
+											abgefahren wurde, erhalten Sie die Nachricht, dass Sie die Messdaten nun
+											herunterladen können. Mit einem Klick auf "Download" wird dies getan.
+											Sollten während Ihrer Versuche Probleme auftreten oder der Schlitten nicht
+											in der Startposition \((-0.2\si{\metre} )\) sein, können Sie durch einen
+											Klick auf "Reset" den Versuch zurücksetzen. Bitte haben Sie dabei Geduld. Da
+											auch der Winkelsensor neu kalibriert wird, kann es mehrere Sekunden dauern,
+											bis die Neukalibrierung erfolgreich ist und der Schlitten seine
+											Initialisierungsbahn abfährt, um die Grenzen der Linearführung zu erfassen.
+											Anschließend können Sie mit Ihren Versuchen fortfahren.
+										</p>
+									</div>
+								</div>
+								<div class="visible-xs-block">
+									<div class="row">
+										<p>Unten sehen Sie die Bedienoberfläche für die erste Aufgabe. Sie können in der
+											Eingabemaske die jeweiligen Parameter ihres Profils eingeben und durch einen
+											Klick auf "Start" mit dem Versuch beginnen. Sollten die oben genannten
+											Anforderungen nicht erfüllt sein, erhalten Sie eine Fehlerrückmeldung und
+											können Ihr Profil verbessern. Nachdem das Profil vorwärts und rückwärts
+											abgefahren wurde, erhalten Sie die Nachricht, dass Sie die Messdaten nun
+											herunterladen können. Mit einem Klick auf "Download" wird dies getan.
+											Sollten während Ihrer Versuche Probleme auftreten oder der Schlitten nicht
+											in der Startposition \((-0.2\si{\metre} )\) sein, können Sie durch einen
+											Klick auf "Reset" den Versuch zurücksetzen. Bitte haben Sie dabei Geduld. Da
+											auch der Winkelsensor neu kalibriert wird, kann es mehrere Sekunden dauern,
+											bis die Neukalibrierung erfolgreich ist und der Schlitten seine
+											Initialisierungsbahn abfährt, um die Grenzen der Linearführung zu erfassen.
+											Anschließend können Sie mit Ihren Versuchen fortfahren.
+										</p>
+										<img src="/static/img/MechSys/Labor31.png" width="100%">
+									</div>
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Aufgabe 2</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Das Ziel dieser Aufgabe ist die Identifikation von Pendellänge, -masse und Lagerdämpfung
+								mit Hilfe mehrerer Ausschwingversuche.
+								Sie können zwischen den drei Anregungen "schwach", "mittel" und "stark" wählen und
+								anschließend den Versuch durch einen Klick auf "Start" starten. Nach einer
+								Ausschwingzeit von \(10\si{\second} \) erhalten Sie die Meldung, dass Sie die Messdaten
+								nun herunterladen können, was Sie durch einen Klick auf "Download" tun können. Die Daten
+								liegen im csv-Format vor und beinhalten in der ersten Spalte die Zeit in Sekunden und in
+								der zweiten Spalte den Winkel in \(\si{\radian} \). Aus diesen Daten können Sie die
+								Pendellänge, -masse und Lagerdämpfung mittels Mittelwertbildung bestimmen. Folgende
+								Hinweise könnten Ihnen beim Lösen der Aufgabe helfen:</p>
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									{{ img_show.img_show('/static/img/MechSys/Labor32.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<ul>
+										<li>Überlegen Sie sich zuerst, ob die Differentialgleichung in dem vorhandenen
+											Fall weiter vereinfacht werden kann.</li>
+										<li>Für die Identifizierung der Pendellänge können Sie ausnutzen, dass diese die
+											Eigenfrequenz eines Pendels beeinflusst. Hier dürfen Sie vereinfachend (und
+											in guter Näherung) eine ungedämpfte
+											Schwingung und das Pendel als dünnen Stab annehmen.</li>
+										<li>Die Identifizierung der Lagerdämpfung kann über den exponentiellen Abfall
+											(negativer Exponent) der Schwingungsamplitude erfolgen. Schauen Sie sich
+											dazu die Lösung der Differentialgleichung an.</li>
+										<li>Beachten Sie dabei bitte, dass es unterschiedliche Darstellungsformen für
+											eine Differentialgleichung zweiter Ordnung gibt. Überführen Sie diese
+											notfalls in die hier geforderte.</li>
+									</ul>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<ul>
+										<li>Überlegen Sie sich zuerst, ob die Differentialgleichung in dem vorhandenen
+											Fall weiter vereinfacht werden kann.</li>
+										<li>Für die Identifizierung der Pendellänge können Sie ausnutzen, dass diese die
+											Eigenfrequenz eines Pendels beeinflusst. Hier dürfen Sie vereinfachend eine
+											ungedämpfte
+											Schwingung und ein Pendel aus Vollmaterial annehmen.</li>
+										<li>Die Identifizierung der Lagerdämpfung kann über den exponentiellen Abfall
+											(negativer Exponent) der Schwingungsamplitude erfolgen. Schauen Sie sich
+											dazu die Lösung der Differentialgleichung an.</li>
+										<li>Beachten Sie dabei bitte, dass es unterschiedliche Darstellungsformen für
+											eine Differentialgleichung zweiter Ordnung gibt. Überführen Sie diese
+											notfalls in die hier geforderte.</li>
+									</ul>
+									<p>
+										Treten während des Versuchs Probleme auf, können Sie durch einen Klick auf
+										"Reset" den Versuch zurücksetzen. Auch hier gilt: Bitte haben Sie dafür Geduld.
+									</p>
+									<img src="/static/img/MechSys/Labor32.png" width="100%">
+								</div>
+							</div>
+
+
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#chall">Challenge</a>
+					</h4>
+				</div>
+				<div id="chall" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>In der Challenge sollen sie eine Dämpfungsfunktion \(D(\varphi,\dot{\varphi})\) der
+								Differentialgleichung
+								\[
+								\ddot{\varphi}=\frac{1}{J_\mathrm{p}+\frac{l^2}{4}m_\mathrm{p}}\left(\frac{1}{2}lm_\mathrm{p}\ddot{x}-\frac{1}{2}lm_\mathrm{p}g\left(\varphi-\pi\right)-D(\varphi,\dot{\varphi})\right)
+								\]
+								schreiben, die das reale Pendel bestmöglich abbildet. Dies bedeutet, dass der
+								Unterschied zwischen der aus der Differentialgleichung berechneten Beschleunigung und
+								der aus den Messdaten ermittelten Beschleunigung minimal wird. Um Ihre Lösungen vor dem
+								Übermitteln zu testen, können Sie hier einen zip-Ordner <a
+									href="/static/files/challenge.zip">herunterladen</a>. Dieser enthält mehrere Skripte
+								(die Hauptdatei ist your_try), die Sie in Matlab oder Octave ausführen können.
+								Bitte halten Sie sich dabei an die Kommentare in den Skript-Dateien. In den Skripten
+								wird ermittelt, um wieviel Ihre Lösung besser ist, als die Lösung für ein Modell ohne
+								Dämpfungsfunktion. Daher ist Ihre Lösung besser, je größer der resultierende Wert ist.
+								Beachten Sie bitte, dass bei mehrfacher Anregung des Systems während der Versuchszeit
+								die jeweils letzte Anregung ihrer Gruppe zur Bewertung herangezogen wird. Sollten Sie
+								also eine Anregung mehrmals durchführen, wird ihre Dämpfungsfunktion hinsichtlich der
+								letzten Durchführung bewertet. Für die Übermittlung Ihrer Dämpfungsfunktion müssen Sie
+								sich an folgende Formalitäten halten:
+							<ul>
+								<li> Benutzen Sie keine Anführungszeichen.</li>
+								<li> Der Winkel muss phi heißen und wird im Bogenmaß gemessen.</li>
+								<li> Die Winkelgeschwindigkeit heißt dphi und wird in rad/s angegeben.</li>
+								<li> Die Funktion darf maximal 45 Zeichen lang sein.</li>
+								<li> Es ist möglich die Konstanten \(\pi\) und \(e\) zu nutzen.</li>
+								<li> Es besteht eine Auswahl an Funktionen, die Sie nutzen können. Diese sind in der
+									nachfolgenden Tabelle aufgelistet.</li>
+								<li> Benutzen Sie (runde) Klammern.</li>
+							</ul>
+							</p>
+							<table id="ranking" class="table table-bordered" style="text-align:center; font-size:14px;"">
+								<thead>
+									<tr>
+										<th style=" text-align:center;">Zeichen</th>
+								<th style="text-align:center;">Bedeutung</th>
+								<th style="text-align:center;">Zeichen</th>
+								<th style="text-align:center;">Bedeutung</th>
+								</tr>
+								</thead>
+								<tbody>
+									{{ lists.parsing_row('+','Addition','-','Subtraktion') }}
+									{{ lists.parsing_row('*','Multiplikation','/','Division') }}
+									{{ lists.parsing_row('^','Potenz','(','öffnende Klammer') }}
+									{{ lists.parsing_row(')','schließende Klammer','sin(...)','Sinus') }}
+									{{ lists.parsing_row('cos(...)','Kosinus','tan(...)','Tangens') }}
+									{{ lists.parsing_row('a... (z.B. asin)','Arkusfunktion','...h (z.B.
+									sinh)','Hyperbolikus') }}
+									{{ lists.parsing_row('abs(...)','Betrag','sign(...)','Signum-Funktion') }}
+									{{ lists.parsing_row('exp(...)','e-Funktion','pi','\\(\\pi\\)') }}
+								</tbody>
+							</table>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+[
+			{
+				"Name": "Event",
+				"Title": "Pruefstand belegt (Sterneck)",
+				"Start": "2022-11-08T21:00:00",
+				"End": "2022-11-08T23:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Pruefstand belegt (Sterneck)",
+				"Start": "2022-11-08T08:00:00",
+				"End": "2022-11-08T13:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Pendel in Benutzung",
+				"Start": "2023-01-20T19:00:00",
+				"End": "2023-01-23T20:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			}
+]

@@ -1,0 +1,32 @@
+a, a:active, a:focus {
+	outline: none;
+}
+.row-eq-height {
+  	display: -webkit-box;
+  	display: -webkit-flex;
+  	display: -ms-flexbox;
+  	display:         flex;
+}
+
+@media screen and (min-width: 767px) {
+	.navbar-nav .dropdown-menu .caret {
+		transform: rotate(-90deg);
+    }
+}
+
+body {
+	text-align: center;
+	font-size: 14px;
+	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	background-color: rgb(230,230,230);
+}
+label {
+    font-weight: normal !important;
+}
+
+@media screen and (min-width: 992px) {
+	body {
+		margin-top: 40px;
+		margin-bottom: 40px;
+    }
+}

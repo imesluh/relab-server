@@ -1,0 +1,120 @@
+{% macro input(text, file_id='file_id', file_select='file_select', accept='.*') -%}
+<div class="input-group">
+	<label class="input-group-btn">
+		<span class="btn btn-default">
+			Search&hellip; <input id="{{ file_id }}" type="file" accept="{{ accept }}" required style="display: none;">
+		</span>
+	</label>
+	<input id="{{ file_select }}" type="text" class="form-control" readonly>
+</div>
+<span class="help-block">
+	{{ text }}
+</span>
+{%- endmacro %}
+
+{%- macro solution_input(header, description, vars, size) -%}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>{{ header }}</h4>
+	</div>
+	<div class="panel-body">
+		<div class="row row-eq-height">
+			<div class="container">
+				<span class="help-block">
+					{{ description }}
+				</span>
+			</div>
+		</div>
+		<div class="row row-eq-height">
+			{% if size=="long" %}
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class=container-fluid style="width:100%">
+					<table class="table" style="width:100%">
+						<tbody>
+							{% for var in vars %}
+							<tr>
+								<td align="right"><strong>\({{ var.name }}\):</strong></td>
+								<td align="center"><input type="text" required id="{{ var.id }}" maxlength="45"
+										style="width:100%" class="{{ var.number }}" {{ var.type }}></td>
+								<td align="left" style="font-size:12px;">\({{ var.unit }}\)</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>
+			{% else %}
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<table class="table visible-lg-block visible-md-block visible-sm-block visible-xs-block pull-right"
+					style="width:200px">
+					<tbody>
+						{% for var in vars %}
+						<tr>
+							<td align="right"">\({{ var.name }}\):</td>
+						<td align=" center"><input type="text" required id="{{ var.id }}" maxlength="6" size="6" class="{{ var.number }}" {{
+									var.type }}></td>
+							<td align="left" style="font-size:12px;">\({{ var.unit }}\)</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{%- endmacro %}
+
+{%- macro eval_input(header, description, quests) -%}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>{{ header }}</h4>
+	</div>
+	<div class="panel-body">
+		<div class="row row-eq-height">
+			<div class="container">
+				<span class="help-block">
+					{% for subtext in description %}
+					{{ subtext }}
+					<br>
+					{% endfor %}
+				</span>
+			</div>
+		</div>
+		{% for quest in quests %}
+		<div class="row row-eq-height">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class=container-fluid style="width:100%">
+					<span class="help-block">
+						{{ quest.text }}
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row row-eq-height">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class=container-fluid style="width:100%">
+					{% if quest.type == 'rating' %}
+					{% for idx in range(5) %}
+					<div class="checkbox-inline">
+  					<input class="form-check-input" type="radio" name="{{ 'inlineRadioOptions' + quest.id}}" id="{{ 'inlineRadio' + quest.id + '_' + (idx+1)|string}}" value="">
+  					<label class="form-check-label" for="{{ 'inlineRadio' + quest.id + '_' + (idx+1)|string}}">{{ idx+1 }}</label>
+					</div>
+					{% endfor %}
+					{% elif quest.type == 'text' %}
+					<div class="mb-3">
+    				<input type="text" class="form-control" id="{{ 'inlineText' + quest.id}}">
+						<!--<label for="exampleInputEmail1" class="form-label">Email address</label>-->
+  				</div>
+					{% endif %}
+				</div>
+			</div>
+			<!--<div class="col-lg-2 col-md-2 col-sm-2 hidden-xs"></div>-->
+		</div>
+		<div class="row row-eq-height">
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{%- endmacro %}

@@ -1,0 +1,39 @@
+{%- macro button(id='', text="button", type="btn-default", size="btn-lg", gly="glyphicon-upload", style="margin: 0 auto") -%}
+<button id="{{ id }}" type="button" class="btn {{ type }} {{ size }}" style="{{ style }}">
+	<span class="glyphicon {{ gly }}" aria-hidden="true"></span> {{ text }}
+</button>
+{%- endmacro %}
+
+{%- macro choose_dd(native, links, native_value=0,id='dd-button', type="btn-default", size="", class="") -%}
+<div class="dropdown">
+	{% if native_value==0 %}
+	<!--
+	<button id="{{ id }}" class="btn {{ type }} {{ size }} {{ class }} btn-block dropdown-toggle box" type="button" data-toggle="dropdown"><font>{{ native }} </font><span class="caret"></span></button>
+	-->
+	<button id="{{ id }}" class="btn {{ type }} {{ size }} {{ class }} btn-block dropdown-toggle box" type="button" data-toggle="dropdown" value= "{{ native }}"><font>{{ links[native] }} </font><span class="caret"></span></button>
+	<ul class="dropdown-menu choose_dd">
+		{% for link in links %}
+		<li><a href="#" onClick="return false;">{{ link }} </a></li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<button id="{{ id }}" class="btn {{ type }} {{ size }} {{ class }} btn-block dropdown-toggle box" type="button" data-toggle="dropdown" value= "{{ native }}"><font>{{ links[native] }} </font><span class="caret"></span></button>
+	<ul class="dropdown-menu choose_dd">
+		{% for link in links %}
+		<li><a href="#" onClick="return false;">{{ link }} </a></li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+</div>
+{%- endmacro %}
+
+{%- macro dd_axis(native, links, colors, id, class="dd_axis", type="btn-default", size="") -%}
+<div class="dropdown">
+	<button id="{{ id }}" class="btn {{ type }} {{ size }} {{ class }} btn-block dropdown-toggle box" type="button" data-toggle="dropdown" value= "{{ native }}"><font color="{{ colors[native] }}">{{ links[native] }} </font><span class="caret"></span></button>
+	<ul class="dropdown-menu d_axis">
+		{% for link in links %}
+		<li><a href="#" onClick="return false;" style="color: {{ colors[loop.index0] }};">{{ link }} </a></li>
+		{% endfor %}
+	</ul>
+</div>
+{%- endmacro %}

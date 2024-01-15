@@ -1,0 +1,32 @@
+[{
+	"name": "x",
+	"unit": "\\si{m}",
+	"color": "blue",
+	"range": ["-0.2","0.2"]
+	},
+	{
+	"name": "v",
+	"unit": "\\si[per-mode = fraction] {\\metre\\per\\second}",
+	"color": "green",
+	"range": ["-1","1"]
+	},
+	{
+	"name": "\\varphi",
+	"unit": "\\si{\\radian}",
+	"color": "grey",
+	"range": ["-3","3"]
+	},
+	{
+	"name": "\\omega",
+	"unit": "\\si[per-mode = fraction] {\\radian\\per\\second}",
+	"color": "orange",
+	"range": ["-30","30"]
+	},
+	{
+	"name": "M",
+	"unit": "\\si{N.m}",
+	"color": "red",
+	"range": ["-0.5","0.5"]
+	}
+]
+

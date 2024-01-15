@@ -1,0 +1,48 @@
+{% macro slider(pos, slider_id, slider_name, type, m_min, m_max, m_value, m_step) -%}
+<div class="row">
+    <div class="col-lg-1 col-md-3 col-sm-3 col-xs-4">
+        <h6 class="text-left">{{slider_name}}</h6>
+    </div>
+    <div class="col-lg-9 col-md-6 col-sm-6 col-xs-4">
+        <div id="{{slider_id}}" style="margin-top: 3%" {{type}}></div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-4">
+        <input type="text" id="{{pos}}" name="{{slider_name}}" size="5" maxlength="5" value={{ m_value }}
+            class="custom-input pull-right {{type}}_{{pos}} number" {{type}}>
+    </div>
+</div>
+<script>
+    $("#{{slider_id}}").slider({
+        min: {{ m_min }},
+        max: {{ m_max }},
+        value: {{ m_value }},
+        step: {{ m_step }},
+        slide: function (event, ui) {
+            $(".{{type}}_{{pos}}").val(ui.value);
+            $(ui.value).val($(".{{type}}_{{pos}}").val());
+        },
+        stop: function (event, ui) {
+            $(".{{type}}_{{pos}}").val(ui.value);
+            $(ui.value).val($(".{{type}}_{{pos}}").val());
+        }
+    });
+    $(".{{type}}_{{pos}}").focusout(function (e) {
+        e.preventDefault();
+        if ({{ m_min }} <= $(".{{type}}_{{pos}}").val() && $(".{{type}}_{{pos}}").val() <= {{ m_max }}){
+            $("#{{slider_id}}").slider("value", $(this).val());
+        } else {
+            BootstrapDialog.alert(unescape("Please input a value fitting the range: [" + {{ m_min }} + "," + {{ m_max }} + "]"));
+        }
+    });
+    $(".{{type}}_{{pos}}").keydown(function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            if ({{ m_min }} <= $(".{{type}}_{{pos}}").val() && $(".{{type}}_{{pos}}").val() <= {{ m_max }}){
+                $("#{{slider_id}}").slider("value", $(this).val());
+            } else {
+                BootstrapDialog.alert(unescape("Please input a value fitting the range: [" + {{ m_min }} + "," + {{ m_max }} + "]"));
+            }
+        }
+    });
+</script>
+{%- endmacro %}

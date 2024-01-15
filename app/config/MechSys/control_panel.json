@@ -1,0 +1,6 @@
+{
+  "ges_sliders":[{ "pos":"0","slider_id":"slider0","slider_name":"\\(K_\\mathrm{p}\\)","type":"geschwindigkeit","m_min":0,"m_max":1,"m_value":0.4,"m_step":0.01},
+    { "pos":"1","slider_id":"slider1","slider_name":"\\(K_\\mathrm{i}\\)","type":"geschwindigkeit","m_min":0,"m_max":40,"m_value":0,"m_step":0.01}],
+
+  "pos_sliders":[{ "pos":"0","slider_id":"slider3","slider_name":"\\(K_\\mathrm{p}\\)","type":"position","m_min":0,"m_max":10,"m_value":0,"m_step":0.01}]
+}

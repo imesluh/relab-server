@@ -1,0 +1,248 @@
+{% extends "MechSys/base.html" %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/textbox.html' as boxes %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script>var mainroute = '/MechSys/rest/be/CI';</script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/MechSys/stream.js"></script>
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+	<div id="Video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+		<div class="row">
+			<div class="container-fluid" id="stream"></div>
+		</div>
+		<div class="row">
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="vid_message" style="color:red;">
+			</div>
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+				{{ buttons.choose_dd(1,['high','low (VPN)'],1,'stream_select') }}
+			</div>
+		</div>
+	</div>
+	<div id="controlpanel" class="container col-lg-6 col-md-6 col-sm-6 col-xs-6">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<span id="gly_exer1" class="glyphicon glyphicon-edit"></span>
+						<a data-toggle="collapse" href="#aufgabe1">Aufgabe 1</a>
+						<a class="pull-right" id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+					</h4>
+				</div>
+				<div id="aufgabe1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="container-fluid">
+							<div class="row">
+								<span class="help-block">
+									Bitte geben Sie die Koeffizienten des Geschwindigkeitstrapezprofils in die
+									jeweiligen Felder ein. Nutzen Sie dabei einen Punkt zum Darstellen von
+									Dezimalzahlen. Das Trapez hat die Form:
+									\[v(t)=\begin{cases}
+									\begin{array}{lll}
+									a_{\mathrm{0}_\mathrm{1}} + a_{\mathrm{1}_\mathrm{1}}t , & 0\le t \le t_\mathrm{1} &
+									(\mathrm{I}) \\
+									a_{\mathrm{0}_\mathrm{2}} , & t_\mathrm{1} \le t \le t_\mathrm{2} & (\mathrm{II}) \\
+									a_{\mathrm{0}_\mathrm{3}} + a_{\mathrm{1}_\mathrm{3}}(t-t_\mathrm{2}) , &
+									t_\mathrm{2} \le t \le t_\mathrm{e} & (\mathrm{III})
+									\end{array}
+									\end{cases}\]
+								</span>
+							</div>
+							<div class="row row-eq-height" style="height:45px;">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(a_{\mathrm{0}_\mathrm{1}}\) &nbsp</label><input class="number" type="text"
+										id="a01" maxlength="9" size="5"
+										gtp><label>\(\si[per-mode=fraction]{\meter\per\second}\)</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(a_{\mathrm{1}_\mathrm{1}}\) &nbsp</label><input class="number" type="text"
+										id="a11" maxlength="9" size="5"
+										gtp><label>\(\si[per-mode=fraction]{\meter\per\square\second}\)</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(t_\mathrm{1}\) &nbsp</label><input class="number" type="text" id="t1"
+										maxlength="9" size="5" gtp><label>\(\si{\second}\)</label>
+								</div>
+							</div>
+							<div class="row row-eq-height" style="height:45px;">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(a_{\mathrm{0}_\mathrm{2}}\) &nbsp</label><input class="number" type="text"
+										id="a02" maxlength="9" size="5"
+										gtp><label>\(\si[per-mode=fraction]{\meter\per\second}\)</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(t_\mathrm{2}\) &nbsp</label><input class="number" type="text" id="t2"
+										maxlength="9" size="5" gtp><label>\(\si{\second}\)</label>
+								</div>
+							</div>
+							<div class="row row-eq-height" style="height:45px;">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(a_{\mathrm{0}_\mathrm{3}}\) &nbsp</label><input class="number" type="text"
+										id="a03" maxlength="9" size="5"
+										gtp><label>\(\si[per-mode=fraction]{\meter\per\second}\)</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(a_{\mathrm{1}_\mathrm{3}}\) &nbsp</label><input class="number" type="text"
+										id="a13" maxlength="9" size="5"
+										gtp><label>\(\si[per-mode=fraction]{\meter\per\square\second}\)</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									<label>\(t_\mathrm{e}\) &nbsp</label><input class="number" type="text" id="te"
+										maxlength="9" size="5" gtp><label>\(\si{\second}\)</label>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								{{ boxes.help('Drücken Sie "Start", um Ihr Geschwindigkeitstrapez zu starten. Die
+								Strecke wird zusätzlich rückwärts abgefahren. Mit "Reset" können Sie den Versuchsstand
+								neustarten. Dies kann einige Minuten dauern.') }}
+							</div>
+							<div class="row">
+								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<button id="reset1" type="button" class="btn btn-default btn-lg">Reset</button>
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<div class="pull-right">
+										<div class="btn-group btn-group-lg" role="group">
+											<button id="start1" type="button" class="btn btn-primary start">Start</button>
+											{{ buttons.button('download1','Download',size='download',gly='glyphicon-download') }}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<span id="gly_exer2" class="glyphicon glyphicon-edit"></span>
+						<a data-toggle="collapse" href="#aufgabe2">Aufgabe 2</a>
+					</h4>
+				</div>
+				<div id="aufgabe2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									{{ buttons.choose_dd('Anregung',['schwach', 'mittel', 'stark']) }}
+								</div>
+								<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+									{{ boxes.help('Bitte wählen Sie zuerst eine Anregungsstärke aus.') }}
+								</div>
+							</div>
+							<hr>
+							<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								{{ boxes.help('Drücken Sie dann "Start", um mit dem Ausschwingversuch zu beginnen.') }}
+							</div>
+							<div class="row">
+								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									<button id="reset2" type="button" class="btn btn-default btn-lg">Reset</button>
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<div class="pull-right">
+										<div class="btn-group btn-group-lg" role="group">
+											<button id="start2" type="button" class="btn btn-primary start">Start</button>
+											{{ buttons.button('download2','Download', size='download', gly='glyphicon-download') }}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="position: relative; height:300px">
+	<div id="left_input" style="height:300px; width:105px; position: absolute">
+		<input type="text" class="custom-input pull-right" id="left_max" size="5" maxlength="5"
+			value="{{ data['ranges'][1][1]}}" style="position: absolute; top:30px; right: 0px; text-align:right;" />
+		<div style="position: absolute; top:118px; right: 0px;">
+			{{ buttons.dd_axis(1,data["names"], data["colors"], id="left_button") }}
+		</div>
+		<input type="text" class="custom-input pull-right" id="left_min" size="5" maxlength="5"
+			value="{{ data['ranges'][1][0]}}" style="position: absolute; top:238px; right: 0px;  text-align:right;" />
+	</div>
+	<div id="realtimegraph" class="graph" style="height:300px; position: absolute; left: 105px;">
+	</div>
+	<div id="right_input" style="height:300px; width:105px; position: absolute; right: 0px;">
+		<input type="text" class="custom-input" id="right_max" size="5" maxlength="5" value="{{ data['ranges'][4][1]}}"
+			style="position: absolute; top:30px; left: 0px;" />
+		<input type="text" class="custom-input" id="right_min" size="5" maxlength="5" value="{{ data['ranges'][4][0]}}"
+			style="position: absolute; top:238px; left: 0px;" />
+		<div style="position: absolute; top:118px; left: 0px;">
+			{{ buttons.dd_axis(4,data["names"], data["colors"], id="right_button") }}
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/MechSys/chart.js"></script> <!--Needs to be placed here before creating var chart-->
+<script>
+    var ranges = {{ data| safe }}["ranges"]
+    var colors = {{ data| safe }}["colors"]
+    var chart = new runChartJs(20, 300, 'cardinal');
+    function changeOpacity() {
+       chart.changeGraph(function () {
+            $('.dd_axis').each(function () {
+                $('#data' + String($(this).val())).css("opacity", 1)
+            });
+        });
+    }
+    $(".d_axis li a").click(function () {
+        ddButton = $(this).parent().parent().prev()
+        if (!ddButton.is('button')) {
+            if (ddButton.prev().is('button')) {
+                ddButton = ddButton.prev();
+            } else { alert('Wenden Sie sich bitte an den Systemadministrator'); }
+        }
+        $('.group').css('opacity', 0)
+        //dd_buttom = $(this).parent().parent().prev()
+        ddButton.css('color', $(this).css('color'));
+        ddButton.html($(this).html() + ' <span class="caret" style="color:black;"><span>');
+        var index = $(this).parent().index()
+        ddButton.val(index);
+        changeOpacity();
+        //update(_callback);
+    });
+</script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/custom/MechSys/custom.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/MechSys/websocket.js"></script>
+<script src="/static/js/custom/MechSys/lab3/btns1.js"></script>
+<script src="/static/js/custom/MechSys/lab3/btns2.js"></script>
+{% endblock %}

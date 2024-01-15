@@ -1,0 +1,191 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% import '/macros/groups.html' as groups %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/RobotikII/stream.js"></script>
+<script type="text/javascript" src="/static/js/lib/jquery.bootstrap-touchspin.js"></script>
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="/static/css/lib/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=0,links=['Delta','TCP'],native_value=1,id='camera_select') }}
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=1,links=['high','low (VPN)'],native_value=1,id='stream_select') }}
+            </div>
+        </div>
+    </div>
+    <div id="control_panel" class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span id="gly_exer1" class="glyphicon glyphicon-edit"></span> Inverse Kinematik <a
+                        class="pull-right" id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body" id="initBox">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <p><b>Zielpositionen des Endeffektors</b></p>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <span id="gly1" class="glyphicon glyphicon-edit"></span>
+                            <span id="position1"></span></br>
+                            <span id="gly2" class="glyphicon glyphicon-edit"></span>
+                            <span id="position2"></span></br>
+                            <span id="gly3" class="glyphicon glyphicon-edit"></span>
+                            <span id="position3"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="btn_joint">
+                            {% for group in gp["JointBtn"] %}
+                            <div class="row" style="padding-bottom: 5px">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <p class="text-right">{{group.sign}}</p>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 {{group.class}}">
+                                    <input id="{{group.id}}" class="{{group.class}}" type="text" value="{{group.value}}"
+                                        min="{{group.min}}" max="{{group.max}}" step="{{group.step}}">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="btn_endeffector">
+                            {% for group in gp["PoseBtn"] %}
+                            <div class="row" style="padding-bottom: 5px">
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                    <p class="text-right">{{group.sign}}</p>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 {{group.class}}">
+                                    <input id="{{group.id}}" class="{{group.class}}" type="text" value="{{group.value}}"
+                                        min="{{group.min}}" max="{{group.max}}" step="{{group.step}}">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="btn-group btn-group-lg" role="group">
+                                {{ buttons.button('download1','Download',size="download",gly='glyphicon-download') }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="pull-right">
+                                <div class="btn-group btn-group-lg" role="group">
+                                    <button id="bt_home1" type="button" class="btn btn-default">Home</button>
+                                    <button id="bt_start1" type="button" class="btn btn-primary start">Start</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: relative; height:300px">
+    <div id="left_input" style="height:300px; width:105px; position: absolute">
+        <input type="text" class="custom-input pull-right" id="left_max" size="5" maxlength="5"
+            value="{{ data['ranges'][1][1]}}" style="position: absolute; top:30px; right: 0px; text-align:right;" />
+        <div style="position: absolute; top:118px; right: 0px;">
+            {{ buttons.dd_axis(1,data["names"], data["colors"], id="left_button") }}
+        </div>
+        <input type="text" class="custom-input pull-right" id="left_min" size="5" maxlength="5"
+            value="{{ data['ranges'][1][0]}}" style="position: absolute; top:238px; right: 0px;  text-align:right;" />
+    </div>
+    <div id="realtimegraph" class="graph" style="height:300px; position: absolute; left: 105px;">
+    </div>
+    <div id="right_input" style="height:300px; width:105px; position: absolute; right: 0px;">
+        <input type="text" class="custom-input" id="right_max" size="5" maxlength="5" value="{{ data['ranges'][2][1]}}"
+            style="position: absolute; top:30px; left: 0px;" />
+        <input type="text" class="custom-input" id="right_min" size="5" maxlength="5" value="{{ data['ranges'][2][0]}}"
+            style="position: absolute; top:238px; left: 0px;" />
+        <div style="position: absolute; top:118px; left: 0px;">
+            {{ buttons.dd_axis(2,data["names"], data["colors"], id="right_button") }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script>
+    var ranges = {{ data| safe }}["ranges"]
+    var colors = {{ data| safe }}["colors"]
+    function change_opacity() {
+        change_graph(function () {
+            $('.dd_axis').each(function () {
+                $('#data' + String($(this).val())).css("opacity", 1)
+            });
+        });
+    }
+    $(".d_axis li a").click(function () {
+        dd_button = $(this).parent().parent().prev()
+        if (!dd_button.is('button')) {
+            if (dd_button.prev().is('button')) {
+                dd_button = dd_button.prev();
+            } else {
+                alert('Wenden Sie sich bitte an den Systemadministrator.');
+            }
+        }
+        $('.group').css('opacity', 0)
+        dd_button.css('color', $(this).css('color'));
+        dd_button.html($(this).html() + ' <span class="caret" style="color:black;"><span>');
+        var index = $(this).parent().index()
+        dd_button.val(index);
+        change_opacity();
+        //update(_callback);
+    });
+</script>
+
+<script src="/static/js/custom/RobotikII/custom.js"></script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/custom/RobotikII/chart.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/RobotikII/lab1/lab1.js"></script>
+<script src="/static/js/custom/RobotikII/websocket.js"></script>
+{% endblock %}

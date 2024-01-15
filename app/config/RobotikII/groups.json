@@ -1,0 +1,20 @@
+{"labs":
+	[
+		{"JointBtn":
+			[
+				{ "class": "joint", "id":"J1", "sign":"\\(\\theta_{1}\\)", "value": 0, "min": -45, "max": 112, "step": 0.10},
+				{ "class": "joint", "id":"J2", "sign":"\\(\\theta_{2}\\)", "value": 0, "min": -45, "max": 112, "step": 0.10},
+				{ "class": "joint", "id":"J3", "sign":"\\(\\theta_{3}\\)", "value": 0, "min": -45, "max": 112, "step": 0.10}
+			],
+         	"PoseBtn":
+			[
+				{ "class": "endeffector", "id":"Xe", "sign":"\\(x_E\\)", "value": 0, "min": -200, "max": 200, "step": 0.10},
+				{ "class": "endeffector", "id":"Ye", "sign":"\\(y_E\\)", "value": 0, "min": -200, "max": 200, "step": 0.10},
+				{ "class": "endeffector", "id":"Ze", "sign":"\\(z_E\\)", "value": 374.26, "min": 320, "max": 550, "step": 0.10}
+			]
+		},
+		{},
+		{},
+		{}
+	]
+}

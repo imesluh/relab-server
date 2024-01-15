@@ -1,0 +1,69 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Evaluation{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Evluation des ReLabs</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Um das zusätzliche Lehrangebot des ReLabs stetig zu verbessern,
+                sind wir auf Ihr Feedback angewiesen und möchten Sie daher auffordern an der Evaluation teilzunehmen.
+							</p>
+							<p>
+								Zusätzlicher Anreiz: Sie erhalten nach Beantwortung der Fragen <u>zusätzliche 1000 Punkte</u>.
+							</p>
+              <p>
+								Zur Teilnahme müssen Sie keine Buchung vornehmen, allerdings müssen Sie zuvor bereits an mindestens 2 Laborversuchen teilgenommen haben.
+                Navigieren Sie über <i>Lösung > Evaluation</i> zum Fragebogen oder rufen Sie diesen
+                <a href="https://relab.imes.uni-hannover.de/MechSys/rest/view/SI/labs/Evaluation%205"> hier</a> direkt auf.
+							</p>
+							<p>&nbsp;</p>
+              <p>
+								Darüber hinaus sind wir natürlich auch über weitere Rückmeldung zu technischen Problemen o.ä. dankbar, die Sie per Mail an
+                <a href="mailto:relab@imes.uni-hannover.de">relab@imes.uni-hannover.de</a> senden können.
+                Vielen Dank!
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

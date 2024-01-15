@@ -1,0 +1,58 @@
+[{
+	"header": "Aufgabe 1",
+	"text": ["Geben Sie bitte die berechneten Reibwerte (Coulombsche und viskose Reibung)",
+		"der Linearführung in den gebenen Einheiten an.",
+		"Benutzen Sie dabei einen Punkt zur Darstellung von Dezimalzahlen:"],
+	"values":
+	[{
+		"name": "\\mu",
+		"id": "mue",
+		"unit": "1",
+		"number": "number"
+	},
+		{	"name": "d_\\mathrm{lin}",
+			"id": "d_lin",
+			"unit": "\\si[per-mode = fraction] {kg\\per\\second}",
+			"number": "number"
+		}],
+	"size": "short"
+},
+	{
+		"header": "Aufgabe 2",
+		"text": ["Geben Sie bitte die berechnete Länge, Masse und Dämpfungskonstante (in den gegeben Einheiten)",
+			"des Pendels ein. Beachten Sie insbesondere den Faktor bei der Lagerdämpfung.",
+			"Benutzen Sie dabei einen Punkt zur Darstellung von Dezimalzahlen:"],
+		"values":
+		[{
+			"name": "l",
+			"id": "length",
+			"unit": "\\si{m}",
+			"number": "number"
+		},
+			{	"name": "m_\\mathrm{p}",
+				"id": "mass",
+				"unit": "\\si{kg}",
+				"number": "number"
+			},
+			{	"name": "d_\\mathrm{p}",
+				"id": "d_rot",
+				"unit": "\\si[per-mode = fraction] {N.m.s\\per\\radian}",
+				"number": "number"
+			}],
+		"size": "short"
+	},
+	{
+		"header": "Challenge",
+		"text": ["Geben Sie eine beliebige Dämpfungsfunktion \\(D(\\varphi(t),\\dot{\\varphi}(t))\\) an.",
+			"Das geforderte Format entnehmen Sie bitte der Aufgabenstellung.",
+			"Nutzen Sie keine Anführungszeichen."],
+		"values":
+		[{
+			"name": "D(\\varphi(t),\\dot{\\varphi}(t))",
+			"id": "d_func",
+			"unit": "\\si{N.m}",
+			"number": ""
+		}],
+		"size": "long"
+	}
+]

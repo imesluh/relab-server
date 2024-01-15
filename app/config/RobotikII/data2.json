@@ -1,0 +1,37 @@
+[	{
+	"name": "\\theta",
+	"unit": "\\si{°}",
+	"color": "black",
+	"range": ["-2","2"]
+	},
+	{
+	"name": "\\dot{\\theta}",
+	"unit": "\\si[per-mode = fraction] {\\degree\\per\\second}",
+	"color": "green",
+	"range": ["-4","4"]
+	},
+	{
+	"name": "\\ddot{\\theta}",
+	"unit": "\\si[per-mode = fraction] {\\degree\\per\\square\\second}",
+	"color": "grey",
+	"range": ["-60","60"]
+	},
+	{
+	"name": "\\tau_\\mathrm{m}",
+	"unit": "\\si{N.m}",
+	"color": "orange",
+	"range": ["-0.4","0.4"]
+	},
+	{
+	"name": "\\tau_\\mathrm{SK}",
+	"unit": "\\si{N.m}",
+	"color": "red",
+	"range": ["-0.4","0.4"]
+	},
+	{
+	"name": "\\tau_\\mathrm{SKR}",
+	"unit": "\\si{N.m}",
+	"color": "blue",
+	"range": ["-0.4","0.4"]
+	}
+]

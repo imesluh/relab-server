@@ -1,0 +1,177 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 4{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise und Lernziele</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Im letzten Versuch sollten Sie den translatorischen Versatz von Bildern basierend auf
+								Merkmalen bestimmen. Bislang wurde noch nicht genauer darauf eingegangen, wie diese
+								Merkmale aus dem Bild extrahiert wurden. Mit solchen Fragestellung beschäftigt sich der
+								vierte Teil der Vorlesung Robotik II. In diesem Versuch ist nun die Aufgabe diese
+								Merkmale im Bild zu finden und in die richtige Klasse einzuteilen. Die wichtigsten
+								Lernziele für diesen Versuch können wie folgt zusammengefasst werden:</p>
+							<ul>
+								<li> Erfahrungen in der Datenverarbeitung in Matlab </li>
+								<li> Erstellung einer einfachen Klassifizierung </li>
+							</ul>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1: Klassifizierung der Bildpixel</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<div class="row row-eq-height hidden-xs">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<span class="help-block text-left">
+									<p> Ein großen Teil des vierten Kapitel von Robotik II befasst sich mit der
+										Datenauswahl. Dies wurde aber aus diesem Versuch ausgenommen, da dies den
+										Zeitaufwand des Labor bei weitem überstiegen hätte. Zudem fällt auch die
+										Regression vorerst weg. In diesem Versuch sollen die Pixel in vier Klassen
+										eingeteilt werden:</p>
+									\[Y=\{\text{NoColor}, \text{blue}, \text{red}, \text{green} \}.\]
+									<p>
+										Für diese Aufgabe wurden bereits drei Bilder aufgenommen: TrainBild, TestBild
+										und ValiBild. Für das Test- und TrainBild liegen die zugehörigen Klassen (Label)
+										bereits vor. Das ValiBild ist zur Kontrolle per Sicht gedacht. Für die Bilder
+										und die zugehörigen Labels wurde in Matlab bereits ein <a
+											href="/static/files/Labor4_Klassifikation.zip">Einlese- und Verarbeitungsskript</a>
+										geschrieben. In diesem Skript wurden die einzelnen Farbkanäle des Bildes
+										aufgeteilt und in eine Vektor Form überführt. Mit diesen Daten ist es dann
+										möglich ein \(K\)-Nearest-Neighbors Verfahren anzuwenden und die einzelnen Pixel
+										zu klassifizieren. Um die Güte der Klassifizierung zu bewerten kann die
+										Richtigkeit/Accuracy herangezogen werden. Eine andere Möglichkeit zur Bewertung
+										ist der Matthews-Korrelationskoeffizient. Dieser liegt zwischen \(-1\) und
+										\(+1\), wobei \(+1\) eine perfekte Vorhersage, \(0\) nicht besser als eine
+										Zufallsvorhersage und \(-1\) zeigt eine totale Unstimmigkeit zwischen Vorhersage
+										und Beobachtung darstellt. Der große Vorteil dieses Bewertungsverfahren ist,
+										dass dieser wahre und falsche positive und negative Raten berücksichtigt. So
+										gilt dieser allgemein als ausgewogenes Maß, das auch bei sehr unterschiedlichen
+										Klassengrößen verwendet werden kann. Genauere Informationen sind <a
+											target="_blank"
+											href="https://www.sciencedirect.com/science/article/pii/S1476927104000799?via\%3Dihub">hier</a>
+										zu finden. Der Matthews-Korrelationskoeffizient wurde bereits implementiert und
+										steht als Funktion zu Verfügung.
+									</p>
+									<p>
+										Mit dem antrainierten Modell sollen dann nacheinander drei Bilder klassifiziert
+										und die Ergebnisse als .csv-Datei hochgeladen werden. Laden Sie sich hierfür das
+										aktuelle Bild mittels "Download" herunter und klassifizieren Sie die Pixel durch
+										Ihren erstellten Algorithmus. Über den "Upload"-Button können Sie die
+										Klassenzugehörigkeiten im .csv-Format übergeben. Die Überprüfung Ihrer Lösung
+										kann einige Sekunden dauern. Die Güte Ihrer Lösung können Sie anschließend durch
+										die Einfärbung der Pixel im Kamerastream direkt erkennen. Durch einen Klick auf
+										"Clear" werden die Label aus dem Stream wieder entfernt und die nächste Position
+										angefahren. Die drei Klassifizierungen mit der höchsten Übereinstimmung zum
+										Kamerabild werden bewertet und ergeben die Gesamtpunktzahl.
+									</p>
+								</span>
+							</div>
+						</div>
+						<div class="visible-xs-block">
+							<div class="row container-fluid">
+								<span class="help-block text-left">
+									<p> Ein großen Teil des vierten Kapitel von Robotik II befasst sich mit der
+										Datenauswahl. Dies wurde aber aus diesem Versuch ausgenommen, da dies den
+										Zeitaufwand des Labor bei weitem überstiegen hätte. Zudem fällt auch die
+										Regression vorerst weg. In diesem Versuch sollen die Pixel in vier Klassen
+										eingeteilt werden:</p>
+									\[Y=\{\text{NoColor}, \text{blue}, \text{red}, \text{green} \}.\]
+									<p>
+										Für diese Aufgabe wurden bereits drei Bilder aufgenommen: TrainBild, TestBild
+										und ValiBild. Für das Test- und TrainBild liegen die zugehörigen Klassen (Label)
+										bereits vor. Das ValiBild ist zur Kontrolle per Sicht gedacht. Für die Bilder
+										und die zugehörigen Labels wurde in Matlab bereits ein <a
+											href="/files/Labor4_Klassifikation.zip">Einlese- und Verarbeitungsskript</a>
+										geschrieben. In diesem Skript wurden die einzelnen Farbkanäle des Bildes
+										aufgeteilt und in eine Vektor Form überführt. Mit diesen Daten ist es dann
+										möglich ein \(K\)-Nearest-Neighbors Verfahren anzuwenden und die einzelnen Pixel
+										zu klassifizieren. Um die Güte der Klassifizierung zu bewerten kann die
+										Richtigkeit/Accuracy herangezogen werden. Eine andere Möglichkeit zur Bewertung
+										ist der Matthews-Korrelationskoeffizient. Dieser liegt zwischen \(-1\) und
+										\(+1\), wobei \(+1\) eine perfekte Vorhersage, \(0\) nicht besser als eine
+										Zufallsvorhersage und \(-1\) zeigt eine totale Unstimmigkeit zwischen Vorhersage
+										und Beobachtung darstellt. Der große Vorteil dieses Bewertungsverfahren ist,
+										dass dieser wahre und falsche positive und negative Raten berücksichtigt. So
+										gilt dieser allgemein als ausgewogenes Maß, das auch bei sehr unterschiedlichen
+										Klassengrößen verwendet werden kann. Genauere Informationen sind <a
+											target="_blank"
+											href="https://www.sciencedirect.com/science/article/pii/S1476927104000799?via\%3Dihub">hier</a>
+										zu finden. Der Matthews-Korrelationskoeffizient wurde bereits implementiert und
+										steht als Funktion zu Verfügung.
+									</p>
+									<p>
+										Mit dem antrainierten Modell sollen dann nacheinander drei Bilder klassifiziert
+										und die Ergebnisse als .csv-Datei hochgeladen werden. Laden Sie sich hierfür das
+										aktuelle Bild mittels "Download" herunter und klassifizieren Sie die Pixel durch
+										Ihren erstellten Algorithmus. Über den "Upload"-Button können Sie die
+										Klassenzugehörigkeiten im .csv-Format übergeben. Die Überprüfung Ihrer Lösung
+										kann einige Sekunden dauern. Die Güte Ihrer Lösung können Sie anschließend durch
+										die Einfärbung der Pixel im Kamerastream direkt erkennen. Durch einen Klick auf
+										"Clear" werden die Label aus dem Stream wieder entfernt und die nächste Position
+										angefahren. Die drei Klassifizierungen mit der höchsten Übereinstimmung zum
+										Kamerabild werden bewertet und ergeben die Gesamtpunktzahl.
+									</p>
+								</span>
+							</div>
+						</div>
+						<div class="row row-eq-height">
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								{{ img_show.img_show('/static/img/RobotikII/Lab41.png') }}
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								{{ img_show.img_show('/static/img/RobotikII/Lab42.png') }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+[{
+	"name": "U_\\mathrm{x}",
+	"unit": "\\si{V}",
+	"color": "blue",
+	"range": ["0","10"]
+},
+	{
+		"name": "U_\\mathrm{z}",
+		"unit": "\\si{V}",
+		"color": "green",
+		"range": ["0","10"]
+	},
+	{
+		"name": "a_\\mathrm{x}",
+		"unit": "\\si[per-mode = fraction] {\\metre\\per\\square\\second}",
+		"color": "grey",
+		"range": ["-10","10"]
+	},
+	{
+		"name": "a_\\mathrm{z}",
+		"unit": "\\si[per-mode = fraction] {\\metre\\per\\square\\second}",
+		"color": "orange",
+		"range": ["-10","10"]
+	},
+	{
+		"name": "a_\\mathrm{ges}",
+		"unit": "\\si[per-mode = fraction] {\\metre\\per\\square\\second}",
+		"color": "red",
+		"range": ["-10","10"]
+	}
+]
+

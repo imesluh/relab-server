@@ -1,0 +1,55 @@
+{% extends "/RobotikII/base.html" %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/fullcalendar.min.css' />
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script src='/static/js/lib/moment.min.js'></script>
+<script src='/static/js/lib/fullcalendar.min.js'></script>
+<script src='/static/js/lib/locale/de.js'></script>
+<script>
+var mainroute = '/RobotikII/rest/be/BI';
+var endLabor = moment('2023-01-29T08:00:00') // Last day possible to book a session
+var startLabor = moment('2017-11-01T00:00:00') // First day possible to book a session
+</script>
+<style>
+	.timeline {
+		position: absolute;
+		left: 59px;
+		border: none;
+		border-top: 1px solid red;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		z-index: 999;
+	}
+
+	#calendar {
+		width: 900px;
+		margin: 0 auto;
+	}
+</style>
+{% endblock %}
+{% block title %}Kalender{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="col-lg-1 visible-lg"></div>
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		<div id='calendar' style="width:100%;"></div>
+	</div>
+	<div class="col-lg-1 visible-lg"></div>
+</div>
+<div class="row row-eq-height" style="height: 30px;">
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	</div>
+</div>
+{% endblock %}
+{% block messages %}
+{% include "/includes/q_buchen.html" %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/custom.js"></script>
+<script src="/static/js/custom/calendar.js"></script>
+<script>
+</script>
+{% endblock %}

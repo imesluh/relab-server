@@ -1,0 +1,107 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% import '/macros/groups.html' as groups %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/RobotikII/lab4/stream.js"></script>
+<script type="text/javascript" src="/static/js/lib/jquery.bootstrap-touchspin.js"></script>
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="/static/css/lib/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css" media="all">
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=1,links=['Delta','TCP'],native_value=1,id='camera_select') }}
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(native=1,links=['high','low (VPN)'],native_value=1,id='stream_select') }}
+            </div>
+        </div>
+    </div>
+    <div id="control_panel" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="panel panel-default" id="panel_eig_val">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span id="gly_exer1" class="glyphicon glyphicon-edit"></span> Klassifikation<a class="pull-right"
+                        id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            {{ boxes.help('Laden Sie sich einen Screenshot herunter und bestimmen Sie mit ihrem KNN-Modell die Klassenzuordnung der Pixel. Laden Sie anschießend die Zugehörigkeiten im .csv-Format hoch.') }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            {{ buttons.button('download','Download',gly='glyphicon-download') }}
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                            <div class="pull-right btn-group btn-group-lg" role="group">
+                                <button class="btn btn-lg btn-default" style="display:none;" id="clear">Clear</button>
+                                <label class="btn btn-lg btn-primary">
+                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                    <input id="uploadFile" style="display:none;" type="file" name="file"
+                                        accept=".csv" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script>
+var data = []
+</script>
+<script src="/static/js/custom/RobotikII/custom.js"></script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/RobotikII/websocket.js"></script>
+<script src="/static/js/custom/RobotikII/lab4/lab4.js"></script>
+{% endblock %}

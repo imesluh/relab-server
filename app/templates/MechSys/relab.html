@@ -1,0 +1,131 @@
+{% extends "/MechSys/base.html" %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+{% endblock %}
+{% block title %}Das ReLab{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein1">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p> Beachten Sie zum erfolgreichen Bearbeiten der Aufgaben folgende Hinweise:
+							<ul style="list-style-position:inside;">
+								<li>Nutzen Sie bitte die aktuelle Version von Firefox oder Chrome.</li>
+								<li>Auf die Buchungs- und Steuerungswebsite kann jeweils nur ein Mitglied Ihrer Gruppe
+									zugreifen.</li>
+								<li>Der Start des Videostreams kann mehrere Sekunden dauern. Haben Sie etwas Geduld.
+								</li>
+								<li>Nicht benötigte Tabs sollten geschlossen werden.</li>
+								<li>Einige Labore werden durch die Verwendung von Matlab deutlich vereinfacht. Allen
+									Studierenden steht eine <a
+										href="https://www.luis.uni-hannover.de/matlab-campuslizenz.html">Matlab-Lizenz</a>
+									zur Verfügung.</li>
+							</ul>
+							Bei weiteren Fragen oder Problemen, die nicht in der Anleitungen behandelt werden, wenden
+							Sie sich bitte an den
+							Systemadministrator unter: <a href="mailto:relab@imes.uni-hannover.de">
+								relab@imes.uni-hannover.de</a>.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#ablauf">Der Ablauf</a>
+					</h4>
+				</div>
+				<div id="ablauf" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Der allgemeine Ablauf eines
+								Versuchs besteht aus:
+							<ol style="list-style-position:inside;">
+								<li>dem Durchlesen der Anleitungen,</li>
+								<li>eventuell Vorbereitungen des Laborversuchs,</li>
+								<li>der Buchung des Versuchsstandes für einen bestimmten Zeitraum,</li>
+								<li>dem Durchführen des Versuchs und Übermittlung aller notwendingen Daten</li>
+								<li>und (teilweise) dem Lösen bestimmter Aufgaben unter Verwendung dieser
+									Versuchssdaten.</li>
+							</ol>
+							Damit Sie sich auf den Webseiten zur Buchung, Versuchsdurchführung und Lösungsübermittlung
+							besser zurechtfinden, können Sie detaillierte Informationen über die anderen Menüpunkte in
+							"Informationen" abrufen.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#aufg">Aufgaben</a>
+					</h4>
+				</div>
+				<div id="aufg" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Das Remote Laboratory umfasst folgende 4 Laborversuchen
+							<ul style="list-style-position:inside;">
+								<li> Zunächst wird im ersten Labor eine Positionsregelung für den Schlitten ausgelegt.
+								</li>
+								<li> Zur Messung der Schlittenbeschleunigung wird im zweiten Labor ein Sensor
+									kalibriert.</li>
+								<li> Im dritten Labor werden die unbekannten Parameter des mathematischen Modells des
+									Versuchsstandes identifiziert.</li>
+								<li> Im vierten Labor wird die obere Gleichgewichtslage mittels einer Zustandsregelung
+									stabilisiert.</li>
+							</ul>
+							Jeder Laborversuche bestehen aus Aufgaben und einer "Challenge". Sind die Aufgaben
+							vollständig und richtig bearbeitet, wird die Challenge freigeschaltet. In dieser bekommen
+							Sie die Möglichkeit für verbesserte Lösungen Zusatzpunkte zu erreichen, um im Ranking,
+							welches auf der Hauptseite zu sehen ist aufzusteigen und zum Abschluss des Semesters neben
+							Ruhm und Ehre auch materielle Preise zu erhalten.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#excel">Hinweise zum Importieren der Daten in Excel</a>
+					</h4>
+				</div>
+				<div id="excel" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Da Excel in der deutschen Version nativ Kommata als Trennungszeichen bei Dezimalzahlen
+								und Punkte bei Datumsangaben verwendet, kommt es beim einfachen Öffnen der csv-Tabellen
+								zu Problemen. Sie sollten zum Importieren der Daten in Excel den Reiter "Daten" wählen
+								und dort auf "Aus Text" klicken. Wählen Sie nun die gewünschte Datei aus. Im
+								darauffolgenden Dialog können Sie auf "Weiter" klicken. Im nächsten Fenster markieren
+								Sie bitte unter "Trennzeichen" "Semikolon" mit einem Häkchen und klicken Sie auf
+								"Weiter". Im nächsten Dialogmenü ändern Sie die Darstellung der Dezimalzahlen mit einem
+								Klick auf "Weitere...". Wählen Sie unter Dezimaltrennzeichen "." und unter
+								"1000er-Trennzeichen" " " (Leerzeichen). Bestätigen Sie mit "Ok" und "Fertig stellen".
+								Im darauffolgenden Menü können Sie den Tabellenbereich wählen. Bestätigen Sie hier mit
+								"Ok". Nun sollten die Daten korrekt angezeigt werden.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block own_js %}
+{% endblock %}

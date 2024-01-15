@@ -1,0 +1,16 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<script src="/static/js/jquery.min.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+<script>
+	var time = {{ data| safe }}["time"]
+	alert('Ihre Reservierung startet in ' + time + ' min.');
+	window.location = "/";
+</script>

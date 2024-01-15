@@ -1,0 +1,37 @@
+{% macro tabs(links, id="navTabs", class="nav nav-tabs", clock=True) -%}
+<ul id="{{ id }}" class="{{ class }}">
+	{% for link in links %}
+	{% if loop.first %}
+	<li class="active"><a data-toggle="tab" href="#{{ link.id }}">{{ link.text }}</a></li>
+	{% else %}
+	<li><a data-toggle="tab" href="#{{ link.id }}">{{ link.text }}</a></li>
+	{% endif %}
+	{% endfor %}
+	{% if clock == True %}
+	<li class="pull-right"><a id="clock" style="color:black; font-weight:bold"></a></li>
+	{% endif %}
+</ul>
+{%- endmacro %}
+{%- macro button(id='button', text="button", type="btn-default", size="btn-lg", gly="glyphicon-upload") -%}
+<button id="upload1" type="button" class="btn {{ type }} {{ size }}" style="margin: 0 auto">
+	<span class="glyphicon {{ gly }}" aria-hidden="true"></span> {{ text }}
+</button>
+{%- endmacro %}
+
+{%- macro data_row(sign, text, value, unit) -%}
+<tr>
+	<td>\({{ sign }}\)</td>
+	<td>{{ text }}</td>
+	<td style="font-size:12px;">\({{ value }}\)</td>
+	<td style="font-size:12px;">\({{ unit }}\)</td>
+</tr>
+{%- endmacro %}
+
+{%- macro parsing_row(sign1, math_expr1, sign2, math_expr2) -%}
+<tr>
+	<td>{{ sign1 }}</td>
+	<td>{{ math_expr1 }}</td>
+	<td>{{ sign2 }}</td>
+	<td>{{ math_expr2 }}</td>
+</tr>
+{%- endmacro %}

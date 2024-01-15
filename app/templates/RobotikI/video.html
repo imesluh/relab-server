@@ -1,0 +1,62 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script>var mainroute = '/RobotikI/rest/be/CI';</script>
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<link rel="stylesheet" href="/static/css/custom/table_responsive.css">
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/RobotikI/stream.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+
+
+{% endblock %}
+{% block title %}video test{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(0,['high','low (VPN)'],0,'stream_select') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+<!--{% block own_js %}
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/custom/RobotikI/custom.js"></script>
+<script src="/static/js/custom/RobotikI/lab1/lab1.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/RobotikI/websocket.js"></script>
+{% endblock %}-->

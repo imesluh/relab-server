@@ -1,0 +1,156 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 3{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Herzlich Willkommen zum Remote Laboratory (ReLab) der Lehrveranstaltung Robotik I (WiSe 23/24)!
+							</p>
+							<p>
+								Das ReLab ist als <u>freiwillige</u> Ergänzung zur Computerübung anzusehen und ist als weitere Vertiefung der Vorlesungsinhalte gedacht.
+								Die Versuche des ReLabs basieren auf den Computerübungen, deren entsprechende Aufgaben Sie im Vorfeld bereits bearbeitet haben sollten.
+								Ihre dort programmierten Lösungswege können Sie zur Bearbeitung des ReLabs verwenden.
+								Die Computerübungen und alle nötigen Informationen finden Sie an folgender Stelle:
+							</p>
+							<a href="https://grader.mathworks.com/courses/124667-robotik-i-computerubung-wise-23-24"> Computerübung (Matlab Grader)</a>
+							<p>&nbsp;</p>
+							{{ img_show.img_show('/static/img/RobotikI/RobotikI_testbench.png', width="50%") }}
+							<p>&nbsp;</p>
+							<p>
+								Auf dem Tisch sind fünf blaue Container (A,B,C,D,E) angebracht, in welche der orangefarbige Stern vom Roboter eingesetzt werden kann.
+								Die Struktur dieses Industrieroboters stellt eine serielle kinematische Kette mit sechs angetriebenen Gelenken dar.
+								Das imes bedankt sich bei
+								<a href="https://www.vorausrobotik.com/"> voraus robotik</a>
+								(ehemals Yuanda Robotics) für die Bereitstellung von Parametern und Matlabfunktionen des Roboters.
+							</p>
+							<p>&nbsp;</p>
+							<h4>Technische Hinweise</h4>
+							<p>
+								Allgemein gültige Hinweise zur Durchführung von Versuchen können Sie auf der
+								<a href="https://relab.imes.uni-hannover.de/help/relab/"> Hilfeseite</a>
+								einsehen. Sollten Sie Fragen zur Buchung des Versuchsstands haben, finden Sie eine Anleitung
+								<a href="https://relab.imes.uni-hannover.de/help/booking/"> an dieser Stelle</a>.
+							</p>
+							<p>Sollte die Website in Ihrem Versuch doch einmal abnormales Verhalten zeigen, schließen Sie bitte das Fenster, löschen den Cache und starten Sie den Versuch neu.
+								Alternativ können Sie ein neues Inkognito-Fenster Ihres Browsers nutzen, in welchem kein Cache aus vorherigen Sitzungen verwendet wird. Sollte das Problem dann immer noch auftreten, melden Sie dieses bitte an die angebene Mail-Adresse.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabenteil</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Im Aufgabenteil dieses Laborversuchs sollen Sie analog zur Computerübung eine inkrementelle Bahnplanung mithilfe der differentiellen Kinematik berechnen.
+                Sie erhalten zu Beginn die Startkonfiguration \( \boldsymbol{q}_\text{0} \) als Gelenkwinkel in °, welche der Roboter auch bereits anfährt.
+                Außerdem den Vektor
+                \[\begin{align*}
+									_\text{(0)}\Delta \boldsymbol{r}_\text{E} = \begin{pmatrix} \Delta x \\ \Delta y \\ \Delta z \\ \end{pmatrix} ,
+								\end{align*}\]
+                welcher die relative Zielposition des Endeffektors enthält.
+                Ausgehend von der Startpose soll für den Roboter nun eine inkrementelle Bahn geplant werden, bei der sich die Position
+                des Endeffektors um \( _\text{(0)}\Delta \boldsymbol{r}_\text{E} \) ändert.
+                Da die Aufgabe andernfalls Redundanz aufweist, lösen Sie diese unter der Bedingung, dass nur die ersten drei Achsen \( q_\text{1}, q_\text{2}, q_\text{3} \) eine Bewegung ausführen.
+              </p>
+              <p>
+                Implementieren Sie die inkrementelle Lösung und geben Sie die Gelenkwinkel nach 10 Iterationen an.
+                Da die letzten drei Gelenkwinkel nicht bewegt werden sollen, müssen Sie diese auch nicht angeben.
+							</p>
+              <p>&nbsp;</p>
+							{{ img_show.img_show('/static/img/RobotikI/Lab3_Visu.png', width="50%") }}
+							<p>&nbsp;</p>
+							<p>
+								Die Lernziele dieses Labors sind:
+							</p>
+							<ul>
+								<li>Differentielle Kinematik</li>
+								<li>Berechnung der geometrischen Jacobi-Matrix</li>
+								<li>inkrementelle Bahnplanung</li>
+							</ul>
+              <p>&nbsp;</p>
+							<h5><u>Hinweis</u></h5>
+              <p>
+                Die vorliegende Aufgabe können Sie nach dem Vorgehen in Robotik I lösen (vgl. Gl. 4.6).
+                Die ausschließliche Betrachtung der Endeffektorposition und die Bedingung konstanter Gelenkwinkel in den Gelenken 4-6 können Sie dabei durch Streichen der zugehörigen Zeilen und Spalten der Jacobi-Matrix berücksichtigen.
+                Streichen Sie dabei die richtigen Zeilen, um die Endeffektororientierung zu eliminieren.
+                Um die Bewegung der letzten drei Gelenke zu verhindern, streichen Sie die entsprechenden Spalten.
+              </p>
+							<!--<p>
+								Dieser Laborversuch befindet sich momentan noch in Vorbereitung. Sobald die Bearbeitung möglich ist, werden Sie im Rahmen der Lehrveranstaltung informiert.
+							</p>-->
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Quiz</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Am Ende dieses Labors werden fünf Multiple-Choice Fragen gestellt, welche auch so in der Klausur gefragt werden könnten. Die Fragen sind jeweils mit 500 Punkten versehen.
+								Bei jeder Multiple-Choice Frage werden diese Punkte durch die Anzahl an Versuche, die Sie zur korrekten Beantwortung benötigt haben, geteilt.
+								Je mehr Versuche Sie also benötigen, desto weniger Punkte bekommen Sie für die Frage. Sollten Sie das Labor wiederholen, erhalten Sie keine aktualisierte Punktzahl.
+								Sie können diese Möglichkeit also <u>nicht</u> nutzen, um Ihr Scoring zu verbessern.
+							</p>
+							<p>
+								Immer wenn Sie eine Frage korrekt beantworten, erhält der Roboter die Anweisung den Stern zu greifen und - beginnend mit Behälter A - den Stern in den nachfolgenden Behälter zu transportieren.
+								Sie können Ihren Fortschritt somit anhand der Sternposition beobachten und sollten diesen abschließend zum letzten Behälter E transportiert haben.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

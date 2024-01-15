@@ -1,0 +1,28 @@
+{% extends "/RobotikII/base.html" %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+{% endblock %}
+{% block title %}ReLab{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" id="table_cont" style="overflow:auto;">
+		<table id="ranking" class="table table-striped" style="text-align:center;">
+			<thead>
+				<tr>
+					<th style="text-align:center;">P.</th>
+					<th style="text-align:center;">Gruppe</th>
+					<th style="text-align:center;">Score</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-lg-8 col-md-8 col-sm-6 hidden-xs" id="pic_cont">
+		<img class="hidden-xs" src="/static/img/RobotikII/Delta.png" width=60% style="display:block; margin:auto;">
+	</div>
+</div>
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/RobotikII/main.js"></script>
+{% endblock %}

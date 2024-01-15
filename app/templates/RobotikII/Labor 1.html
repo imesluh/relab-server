@@ -1,0 +1,270 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/forms.html' as forms %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 1{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise und Lernziele</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Im Kapitel "Parallelkinematische Maschinen" wird in der Veranstaltung Robotik II
+								insbesondere die Modellierung und Charakterisierung von PKM diskutiert. In diesem
+								Laborversuch sollen Sie nun einige der vorgestellten Aspekte, insbesondere die
+								Modellierung der inversen Kinematik einer weiteren, industrierelevanten PKM, an einem
+								Praxisbeispiel umsetzten.
+								Die wichtigsten Lernziele für diesen Versuch können wie folgt zusammengefasst werden:
+							</p>
+							<ul>
+								<li> Kennenlernen einer Delta Kinematik mit ihren Besonderheiten </li>
+								<li> Praktisches Erfahren der Auswirkungen von Verkopplungen bei PKM </li>
+								<li> Unterschied und Notwendigkeit von direkter und inverser Kinematik von PKM </li>
+								<li> Selbstständige Modellierung der inversen Kinematik für eine gegebene,
+									praxisrelevante PKM </li>
+							</ul>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1: Auswirkungen der verkoppelten Struktur</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="row row-eq-height hidden-xs">
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+								{{ img_show.img_show('/static/img/RobotikII/Lab11.png') }}
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+								<span class="help-block text-left">
+									<p> Machen Sie sich mit der Umgebung des Remote-Labs vertraut.
+										Die Bedienelemente erlauben Ihnen die einzelnen Gelenkwinkel \(\theta_{i}\) des
+										Roboters zu steuern. Sie können die gewünschten Gelenkwinkel über die "+"- und
+										"-"-Buttons oder direkt in den entsprechenden Feldern vorgeben und mit einem
+										Klick auf "Start" die entsprechende Zielposition anfahren. Optional können Sie
+										die Messdaten der letzten Bewegung mittels "Download" exportieren, um sich die
+										Messdaten hochaufgelöst anzeigen zu lassen. Dabei sind in den Spalten die Zeit
+										in Sekunden, und die drei Achswinkel in Grad aufgetragen. Durch einen Klick auf
+										"Home" können sie die Ausgangsposition als Zielposition vorgeben.
+										Während der Bewegung achten Sie bitte auf folgende Fragen:</p>
+									<ul>
+										<li> Welche Achse hat welchen Einfluss auf die Endeffektorbewegung?</li>
+										<li> Ist die Verknüpfung zwischen Änderung des Gelenkwinkels und Änderung an der
+											Endeffektorplattform intuitiv?</li>
+									</ul>
+									<p>
+										Nachdem Sie sich nun mit dem Prüfstand vertraut gemacht haben, versuchen Sie
+										bitte den Endeffektor zu einer der gegebenen Zielpositionen zu bewegen.Diese
+										werden bei jeder neuen Buchung zufällig generiert.</p>
+								</span>
+							</div>
+						</div>
+						<div class="visible-xs-block">
+							<div class="row container-fluid">
+								<span class="help-block text-left">
+									<p> Machen Sie sich mit der Umgebung des Remote-Labs vertraut.
+										Die Bedienelemente erlauben Ihnen die einzelnen Gelenkwinkel \(\theta_{i}\) des
+										Roboters zu steuern. Sie können die gewünschten Gelenkwinkel über die "+"- und
+										"-"-Buttons oder direkt in den entsprechenden Feldern vorgeben und mit einem
+										Klick auf "Start" die entsprechende Zielposition anfahren. Die Messdaten der
+										letzten Bewegung können Sie mittels "Download" exportieren. Dabei sind in den
+										Spalten die Zeit in Sekunden, und die drei Achswinkel in Grad aufgetragen. Durch
+										einen Klick auf "Home" können sie die Ausgangsposition als Zielposition
+										vorgeben.
+										Während der Bewegung achten Sie bitte auf folgende Fragen:</p>
+									<ul>
+										<li> Welche Achse hat welchen Einfluss auf die Endeffektorbewegung?</li>
+										<li> Ist die Verknüpfung zwischen Änderung des Gelenkwinkels und Änderung an der
+											Endeffektorplattform intuitiv?</li>
+									</ul>
+									<p>
+										Nachdem Sie sich nun mit dem Prüfstand vertraut gemacht haben, versuchen Sie
+										bitte den Endeffektor zu einer der gegebenen Zielpositionen zu bewegen. Diese
+										werden bei jeder neuen Buchung zufällig generiert.</p>
+								</span>
+							</div>
+							<div class="row">
+								{{ img_show.img_show('/static/img/RobotikII/Lab11.png') }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Aufgabe 2: Modellierung der inversen Kinematik des Delta
+							Roboters</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Die Ansteuerung des Roboters in Gelenkwinkeln ist nicht intuitiv. Abhilfe schafft hier
+								die inverse Kinematik: Sie erlaubt nötige Gelenkwinkel der einzelnen Achsen \(i\) bei
+								vorgegebenen Endeffektorposition \(\vec{x}_\mathrm{E}\) über die Geometrie des Roboters
+								zu berechnen. Die Zielpunkte anzufahren, sollte sich dadurch deutlich einfacher
+								gestalten.
+
+								Daher soll in diesem Versuchsteil die inverse Kinematik des Delta Roboters genutzt
+								werden. Um während der Versuchsdurchfürhung nicht in Zeitnot zu geraten, bietet es sich
+								an, die inverse Kinematik schon im Vorfeld zu berechnen. Die kinematische Struktur ist
+								in der Abbildung schematisch skizziert.</p>
+							<div class="row row-eq-height">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+								<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6"
+									style="display:inline-block; vertical-align:middle;">
+									<img src="/static/img/RobotikII/Labor11.png" width="100%"
+										style="vertical-align:middle;">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6"
+									style="display:inline-block; vertical-align:middle;">
+									<img src="/static/img/RobotikII/Labor12.png" width="100%"
+										style="vertical-align:middle;">
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+							</div>
+							<div class="row row-eq-height">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+								<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
+									<p class="text-center">Gesamtaufbau des Delta Roboters</p>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
+									<p class="text-center">Detailansicht für Kette \(i=1\)</p>
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+							</div>
+							<p>Hierzu beachten Sie bitte folgende weiteren Hilfestellungen:</p>
+							<ul>
+								<li> Verwenden Sie das in Vorlesung und Hörsaalübung dargestellte Verfahren indem Sie
+									die geometrischen Zwangsbedingungen \(\vec{h}_{1_i}\) und \(\vec{h}_{2_i}\) für die
+									jeweiligen Ketten \(i\) aufstellen.</li>
+								<li> Bedenken Sie, dass alle drei kinematischen Ketten gleich aufgebaut sind und sie
+									lediglich um \(120°\) versetzt angeordnet sind.</li>
+								<li> Die Koordinatensysteme \(\mathrm{\left(KS\right)_0}\) und
+									\(\mathrm{\left(KS\right)_E}\) sind nur translatorisch verschoben. Es gibt keinen
+									Rotationsanteil.</li>
+								<li> Alle nötigen geometrischen Parameter (i. B. Segmentlängen) finden Sie im Datenblatt
+									des Roboters. </li>
+								<li> Primär- und Sekundärarme des Roboters sind über Kugelgelenke mit einander
+									verbunden. Allgemein kann die Position eines Segmentes der Länge \(r\), dass über
+									ein Kugelgelenk mit den passiven Gelenkwinkeln \(\alpha\) und \(\beta\) gelagert
+									ist, über folgenden Formel beschrieben werden:
+									\[\begin{align*}
+									\Delta x &= r \cdot \cos (\alpha) \cdot \cos (\beta), \\
+									\Delta y &= r \cdot \cos (\alpha) \cdot \sin (\beta), \\
+									\Delta z &= r \cdot \sin (\alpha).
+									\end{align*}\]
+									Für weitere Erläuterungen sei bspw. auf <a target="_blank"
+										href="https://de.wikipedia.org/wiki/Kugelkoordinaten">Wikipedia</a> verwiesen.
+								</li>
+								<li> Die Lösung einer Gleichung vom Typ \(a \cos (\alpha) + b \sin (\alpha) + c =0\)
+									lautet \(\alpha_{1,2}=2\arctan\left(\frac{-b \pm \sqrt{a^2 + b^2 -
+									c^2}}{c-a}\right)\)</li>
+							</ul>
+							<p>
+								Mit der von Ihnen allgemein aufgestellten Kinematik, berechnen Sie bitte die nötigen
+								aktiven Gelenkwinkel für die in der GUI gegebenen Zielpunkte und testen Sie Ihre
+								Ergebnisse am Prüfstand. Wen Sie eine Zielposition erreicht haben, färbt sich diese grün
+								und Sie erhalten je 500 Punkte.
+							</p>
+						</span>
+					</div>
+				</div>
+
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer3">Aufgabe 3: Bewegung in kartesischen Koordinaten</a>
+					</h4>
+				</div>
+				<div id="exer3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="visible-xs-block">
+							<div class="row container-fluid">
+								<span class="help-block text-left">
+									<p>
+										Nachdem Sie die drei Zielpositionen erfolgreich angefahren haben, können Sie dem
+										Roboter auch direkt die Zielposition in kartesischen Koordinaten vorgeben und
+										mit Klicken auf "Start" die Position anfahren.
+										Sie können die am Prüfstand vorab implementierte Funktion der inversen Kinematik
+										nutzen, um sich frei im Arbeitsraum zu bewegen.
+									</p>
+								</span>
+							</div>
+							<div class="row">
+								{{ img_show.img_show('/static/img/RobotikII/Lab12.png') }}
+							</div>
+						</div>
+					</div>
+					<div class="row row-eq-height hidden-xs">
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+							{{ img_show.img_show('/static/img/RobotikII/Lab12.png') }}
+						</div>
+						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+							<span class="help-block text-left">
+								<p>
+									Nachdem Sie die drei Zielpositionen erfolgreich angefahren haben, können Sie dem
+									Roboter auch direkt die Zielposition in kartesischen Koordinaten vorgeben und mit
+									Klicken auf "Start" die Position anfahren.
+									Sie können die am Prüfstand vorab implementierte Funktion der inversen Kinematik
+									nutzen, um sich frei im Arbeitsraum zu bewegen. Beachten Sie dabei bitte die
+									jeweiligen Achsbegrenzungen. Sobald Sie eine Achse der Endeffektorlage oder der
+									Motorwinkel vorgeben, wird der andere Bereich ausgegraut, damit ausschließlich
+									Achswinkel oder Endeffektorkoordinaten vorgegeben werden. Die Messdaten der letzten
+									Bewegung können Sie mittels "Download" exportieren. Dabei sind in den Spalten die
+									Zeit in Sekunden, die drei Achswinkel in Grad und die drei Endeffektorkoordinaten in
+									Millimeter aufgetragen. Durch einen Klick auf "Home" können sie die Ausgangsposition
+									als Zielposition vorgeben.
+								</p>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

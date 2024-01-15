@@ -1,0 +1,216 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 4{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p> Das Ziel dieses Laborversuchs ist die Stabilisierung des Pendels in der oberen
+								Gleichgewichtslage durch eine Zustandsregelung und die anschließende Sollwertfolge des
+								Schlittens mittels eines Vorfilter. Bevor Sie mit dem Versuch starten, sollten Sie sich
+								vergewissern, dass der Winkelsensor in der unteren Ruhelage \(\pi\) anzeigt und notfalls
+								diesen durch Drücken von "Reset" rekalibrieren. Die Eingabefelder der Aufgabe sind auf
+								das Eingeben von Zahlen beschränkt, daher kann es auf einigen Tastaturen vorkommen, dass
+								das "-"-Zeichen nur auf dem Ziffernblock funktioniert.
+							</p>
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>In der ersten Aufgabe soll das Pendel in der oberen Gleichgewichtslage stabilisiert
+								werden. Hierzu ist eine Erweiterung der bekannten Modellierung aus Aufgabe 14 im Skript
+								notwendig: \(\underline{y} = \left(\varphi, x\right)^T\), \(u = \ddot{x}\), \(
+								\underline{x} = \left(\varphi, \dot{\varphi}, x, \dot{x} \right)^T\).
+								Haben Sie Labor 2 erfolgreich bestanden, können Sie Ihre eigenen identifizierten
+								Parameter verwenden (es werden die Parameter von der letzten übermittelten korrekten
+								Lösung genommen), oder auf die anonymisierten zurückgreifen, welche lauten:
+							<ul>
+								<li>\(l_\mathrm{p} = 0.5\si{m}\)</li>
+								<li>\(m_\mathrm{p} = 0.1\si{kg}\)</li>
+								<li>\(d_\mathrm{p} = 0.01\si[per-mode = fraction] {N.m.s\per\radian}\)</li>
+							</ul>
+							Wenn Sie Labor 2 nicht abgeschlossen haben, müssen Sie die anonymisierten Parameter nehmen.
+							Ergänzen Sie das aus der Übung bekannte Zustandsraummodell des Pendels um den Wagen und
+							füllen Sie das verlinkte <a href="/static/files/Polstellenplatzierung.m">Matlab-Skript</a>
+							aus, um durch die Wahl der Polstellen des geschlossenen Regelkreises (im Bereich von -0.1
+							bis -10, keine komplexen Pole) den Rückführvektor zu bestimmen. Achten Sie bitte darauf,
+							dass die Polstellen einen ausreichenden Abstand voneinander haben, also nicht identisch
+							sind.
+							Der ermittelte Rückführvektor muss nur in der ersten Eingabemaske eingetragen werden, um Ihr
+							Zustandsraummodell zu überprüfen. Nachfolgend können Sie die Polstellen durch Schieberegler
+							variieren bis die Aufschwingregelung erfolgreich ist. Da der Erfolg der Aufschwingregelung
+							auch vom initialen Winkel abhängt, ist es durchaus möglich, dass mit gleicher Polstellenwahl
+							ein Aufschwingversuch von Erfolg gekrönt ist, ein anderer hingegen nicht. Ist die obere
+							Gleichgewichtslage stabil, können Sie mit "Accept" die Reglerparametrierung übernehmen oder
+							mit "Stop" die Regelung stoppen.</p>
+							<div class="row row-eq-height">
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									{{ img_show.img_show('/static/img/MechSys/Labor41.png') }}
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+									{{ img_show.img_show('/static/img/MechSys/Labor42.png') }}
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Aufgabe 2</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="container-fluid">
+								<div class="row row-eq-height hidden-xs">
+									<div class="col-lg-4 col-md-4 col-sm-5">
+										{{ img_show.img_show('/static/img/MechSys/Labor43.png') }}
+									</div>
+									<div class="container-fluid col-lg-8 col-md-8 col-sm-7">
+										<p> Nachdem eine stabile Polstellenkonfiguration gefunden wurde, soll in dieser
+											Aufgabe ein Vorfilter berechnet werden, das die Vorgabe der
+											Schlittenposition ermöglicht. Achten Sie bitte darauf, dass basierend auf
+											dem Zustandsraummodell des gesamten Systems auch das Vorfilter für Schlitten
+											und Pendelposition gilt (Vektor mit zwei Einträgen). Für das Vorfilter
+											benötigen Sie aber nur den Eintrag für die Schlittenposition. Wenn das
+											Vorfilter korrekt sein sollte, können Sie anschließend mit dem Schieberegler
+											die Position des Schlittens verändern. Jetzt ist die Challenge
+											freigeschaltet, die Sie mit einem Klick auf "Challenge" starten können.</p>
+									</div>
+								</div>
+								<div class="visible-xs-block">
+									<div class="row">
+										<div class="col-xs-12">
+											{{ img_show.img_show('/static/img/MechSys/Labor43.png',"400px") }}
+										</div>
+										<div class="container-fluid col-xs-12">
+											<p>Nachdem eine stabile Polstellenkonfiguration gefunden wurde, soll in
+												dieser Aufgabe ein Vorfilter berechnet werden, das die Vorgabe der
+												Schlittenposition ermöglicht. Achten Sie bitte darauf, dass basierend
+												auf dem Zustandsraummodell des gesamten Systems auch das Vorfilter für
+												Schlitten und Pendelposition gilt (Vektor mit zwei Einträgen). Für das
+												Vorfilter benötigen Sie aber nur den Eintrag für die Schlittenposition.
+												Wenn das Vorfilter korrekt sein sollte, können Sie anschließend mit dem
+												Schieberegler die Position des Schlittens verändern. Jetzt ist die
+												Challenge freigeschaltet, die Sie mit einem Klick auf "Challenge"
+												starten können.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#challenge">Challenge</a>
+					</h4>
+				</div>
+				<div id="challenge" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="container-fluid">
+								<div class="row row-eq-height hidden-xs">
+									<div class="col-lg-4 col-md-4 col-sm-5">
+										{{ img_show.img_show('/static/img/MechSys/Labor44.png') }}
+									</div>
+									<div class="container-fluid col-lg-8 col-md-8 col-sm-7">
+										<p> In der Challenge sollen Sie eine Polstellenparametrierung finden, die zwei
+											Ziele erreicht. Es wird sowohl ein geringer Verfahrweg des Schlittens als
+											auch ein geringer Ausschlag des Pendels angestrebt. Sie können über die
+											Schieberegler die Polstellen variieren und durch einen Klick auf "Bewerten"
+											die Messung starten, um den Verfahrweg \(\Delta_\mathrm{x}\) (die Differenz
+											aus maximaler und minimaler Position des Schlittens) und die
+											Pendeloszillation \(\Delta_\mathrm{\varphi}\)(Differenz aus maximalem und
+											minimalem Pendelwinkel) zu messen. Die erreichte Punktzahl berechnet sich zu
+										</p>
+										\[score = 20\left(-4500\Delta_\mathrm{\varphi}
+										-2500\Delta_\mathrm{x}+260\right).\]
+										<p>Wollen Sie wieder zum Labor zurückkehren, um erneut ein Vorfilter zu
+											implementieren drücken Sie auf "Zurück".</p>
+									</div>
+								</div>
+								<div class="visible-xs-block">
+									<div class="row">
+										<div class="col-xs-12">
+											{{ img_show.img_show('/static/img/MechSys/Labor44.png',"400px") }}
+										</div>
+										<div class="container-fluid col-xs-12">
+											<p> In der Challenge sollen Sie eine Polstellenparametrierung finden, die
+												zwei Ziele erreicht. Es wird sowohl ein geringer Verfahrweg des
+												Schlittens als auch ein geringer Ausschlag des Pendels angestrebt. Sie
+												können über die Schieberegler die Polstellen variieren und durch einen
+												Klick auf "Bewerten" die Messung starten, um den Verfahrweg
+												\(\Delta_\mathrm{x}\) (die Differenz aus maximaler und minimaler
+												Position des Schlittens) und die Pendeloszillation
+												\(\Delta_\mathrm{\varphi}\) (Differenz aus maximalem und minimalem
+												Pendelwinkel) zu messen. Die erreichte Punktzahl berechnet sich zu</p>
+											\[score = 20\left(-4500\Delta_\mathrm{\varphi}
+											-2500\Delta_\mathrm{x}+260\right).\].
+											<p>Wollen Sie wieder zum Labor zurückkehren, um erneut ein Vorfilter zu
+												implementieren drücken Sie auf "Zurück".</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

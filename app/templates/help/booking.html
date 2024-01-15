@@ -1,0 +1,114 @@
+{% extends "/help/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+{% endblock %}
+{% block title %}Die Buchung{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>Auf der Buchungswebsite können Sie bestehende Reservierungen sehen und freie
+								Slots von 30 Minuten für Ihre Versuche auswählen. Alle Zeiten die nicht buchbar sind,
+								erscheinen im Kalender
+								ausgegraut. Der Zugang zum Versuch wird nur mit einer aktiven Reservierung gestattet. Ab
+								kurz vor Beginn eines Blocks ist keine Änderung seines Reservierungsstatus mehr möglich.
+							</p>
+							<p>Da es nur
+								eine aktive Reservierung pro Gruppe gibt, sollten Sie die Reservierung nicht während des
+								Versuchs löschen.
+								Andernfalls können Sie den Versuch nicht fortsetzen, da Sie keine aktive Reservierung
+								mehr haben.</p>
+							<p>Wenn Sie die Buchungs-Website das erste mal aufrufen, werden Sie aufgefordert Ihrer
+								Gruppe einen Namen zu geben, der auch auf der Hauptseite im Ranking verwendet wird.</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#buchen">Benutzen des Kalenders</a>
+					</h4>
+				</div>
+				<div id="buchen" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-3 col-md-3 col-sm-5">
+									{{ img_show.img_show('/static/img/Kalender.png') }}
+								</div>
+								<div class="col-lg-9 col-md-9 col-sm-7">
+									<p>Bestehende Reservierungen anderer
+										Gruppen sind im Kalender grau dargestellt und Ihre eigenen grün. Wenn Sie keine
+										zukünftige Reservierung
+										haben, können Sie sich einen freien Slot aussuchen und durch anklicken, diesen
+										reservieren. Nutzen Sie dazu
+										auch die Pfeile über dem Kalender. Bestehende zukünftige Reservierungen können
+										per Drag&Drop
+										zu einem beliebigen freien Zeitpunkt verschoben werden. Möchten Sie ihre
+										Reservierung löschen drücken Sie
+										"entf" oder (je nach Tastatur) "del" oder klicken Sie auf Ihre Reservierung.</p>
+									<p> Sollten Sie den Versuchsstand nicht buchen können und auch keine Buchungen
+										sehen, laden Sie zunächst die Seite neu und vergewissern Sie sich bitte, dass
+										Ihr Webbrowser die gestellten Anforderungen erfüllt.
+									</p>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<p>Bestehende Reservierungen anderer
+									Gruppen sind im Kalender grau dargestellt und Ihre eigenen grün. Wenn Sie keine
+									zukünftige Reservierung
+									haben, können Sie sich einen freien Slot aussuchen und durch anklicken, diesen
+									reservieren. Nutzen Sie dazu
+									auch die Pfeile über dem Kalender. Bestehende zukünftige Reservierungen können per
+									Drag&Drop
+									zu einem beliebigen freien Zeitpunkt verschoben werden. Möchten Sie ihre
+									Reservierung löschen drücken Sie
+									"entf" oder (je nach Tastatur) "del" oder klicken Sie auf Ihre Reservierung.</p>
+								<div class="row row-eq-height visible-xs-block">
+									{{ img_show.img_show('/static/img/Kalender.png', "400px") }}
+								</div>
+								<p> Sollten Sie den Versuchsstand nicht buchen können und auch keine Buchungen sehen,
+									laden Sie zunächst die Seite neu und vergewissern Sie sich bitte, dass Ihr
+									Webbrowser die gestellten Anforderungen erfüllt.
+								</p>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#versuche">Anzahl der Versuche</a>
+					</h4>
+				</div>
+				<div id="versuche" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							Die Anzahl der Versuche für die einzelnen Labore ist ebenso wie die Anzahl der
+							Lösungsversuche begrenzt. Nach er Buchung bzw. nach der Übermittlung Ihrer Lösung
+							erhalten sie die verbleibende Anzahl an Versuchen.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

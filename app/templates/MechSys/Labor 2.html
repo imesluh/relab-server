@@ -1,0 +1,334 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+{% endblock %}
+{% block title %}Labor 2{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+									{{ img_show.img_show('/static/img/MechSys/Lab20.png') }}
+								</div>
+								<div class="container-fluid col-lg-7 col-md-7 col-sm-7 col-xs-7">
+									<p>Auf dem verfahrbaren Schlitten ist ein kapazitiver Beschleunigungssensor
+										angebracht. Die Kapazitätsänderung \(\Delta C\) dieses Sensors wird durch eine
+										Auswerteelektronik in eine Spannung umgewandelt und mithilfe eines
+										Analog-Digital-Converters (ADC) digitalisiert. Die Messdaten stehen nach
+										Durchführung jeder Messung als .csv-Datei zum Download bereit. Ziel dieses
+										Laborversuchs ist es, die gemessene Spannung richtig zu interpretieren und sie
+										in die Werte umzurechnen, die in den einzelnen Aufgaben gefordert sind.</p>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<p>Auf dem verfahrbaren Schlitten ist ein kapazitiver Beschleunigungssensor
+										angebracht. Die Kapazitätsänderung \(\Delta C\) dieses Sensors wird durch eine
+										Auswerteelektronik in eine Spannung umgewandelt und mithilfe eines
+										Analog-Digital-Converters (ADC) digitalisiert. Die Messdaten stehen nach
+										Durchführung jeder Messung als .csv-Datei zum Download bereit. Ziel dieses
+										Laborversuchs ist es, die gemessene Spannung richtig zu interpretieren und sie
+										in die Werte umzurechnen, die in den einzelnen Aufgaben gefordert sind.</p>
+									<img src="/static/img/MechSys/Labor20.png" width="100%">
+								</div>
+							</div>
+							<p>
+								Um die Spannung umrechnen zu können, sind Ihnen diverse Eigenschaften und Parameter der
+								Auswerteelektronik und des Sensors gegeben. Dieser ist als Differentialkondensator
+								ausgeführt, sodass es die in diesem Labor auftretenden Auslenkungen von \(\Delta \ell <
+									\frac{d}{10}\) erlauben, die Kapazitätsänderung über die Näherung \(\Delta C=C_{0}
+									\cdot 2 \frac{\Delta \ell}{d}\) zu berechnen.</p>
+									<p>
+										Zu beachten ist, dass die Auswerteelektronik nur eine Spannung von \(0 - 10
+										\si{\volt}\) ausgeben kann. Bei einer Beschleunigung von \(a = 0 \si[per-mode =
+										fraction] {\metre\per\square\second}\) wird eine Spannung von circa \(5
+										\si{\volt}\) ausgegeben, sodass sowohl positive als auch negative
+										Beschleunigungen gemessen werden können und die Ausgangsspannung entsprechend
+										über \(5 \si{\volt}\) steigt bzw. unter \(5 \si{\volt}\) sinkt.</p>
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabe 1</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									{{ img_show.img_show('/static/img/MechSys/Lab21.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<p>In dieser Aufgabe sind drei Trapezprofile hinterlegt, die der Schlitten abfährt,
+										wobei die \(x\)-Achse des Beschleunigungssensor entlang der positiven
+										Bewegungsrichtung des Schlittens ausgerichtet ist. Ermitteln Sie anhand der
+										gemessenen Spannung \(U\) mithilfe Ihrer Umrechnung die positive Beschleunigung
+										\(a\) (nicht beim Bremsvorgang). Es kann hier erforderlich sein, einen
+										Mittelwert zu bilden, da die Werte leicht schwanken. Führen Sie zuerst alle drei
+										Messungen durch und laden Sie jeweils die Daten herunter. Anschließend können
+										Sie die Beschleunigungswerte in den vorgesehenen Feldern eintragen. Die
+										notwendigen Daten des Beschleunigungssensors und der Auswerteelektronik
+										entnehmen sie bitte den weiteren Informationen unter "Daten".
+									</p>
+									<p>
+										Treten während des Versuchs Probleme auf, können Sie durch einen Klick auf
+										"Reset" den Versuch zurücksetzen. Da dies einen Neustart der Prozessrechner
+										beinhaltet, dauert der Vorgang ca. 1 Minute und die Seite muss anschließend neu
+										geladen werden.
+									</p>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<img src="/static/img/MechSys/Lab21" width="100%">
+									<p>In dieser Aufgabe sind drei Trapezprofile hinterlegt, die der Schlitten abfährt,
+										wobei die \(x\)-Achse des Beschleunigungssensor entlang der positiven
+										Bewegungsrichtung des Schlittens ausgerichtet ist. Ermitteln Sie anhand der
+										gemessenen Spannung \(U\) mithilfe Ihrer Umrechnung die positive Beschleunigung
+										\(a\) (nicht beim Bremsvorgang). Es kann hier erforderlich sein, einen
+										Mittelwert zu bilden, da die Werte leicht schwanken. Führen Sie zuerst alle drei
+										Messungen durch und laden Sie jeweils die Daten herunter. Anschließend können
+										Sie die Beschleunigungswerte in den vorgesehenen Feldern eintragen.
+									</p>
+									<p>
+										Treten während des Versuchs Probleme auf, können Sie durch einen Klick auf
+										"Reset" den Versuch zurücksetzen. Auch hier gilt: Bitte haben Sie dafür Geduld.
+									</p>
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Aufgabe 2</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									{{ img_show.img_show('/static/img/MechSys/Lab22.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<p>Bei dieser Aufgabe gilt es die Orientierung des Sensores herauszufinden, da
+										dieser um die \(y\)-Achse rotiert ist. Die Beschleunigung des Schlittens wirkt
+										daher nicht nur auf die \(x\)-Achse des Sensors, sondern auch auf seine
+										\(z\)-Achse, weshalb beide Spannungen im Graph angezeigt werden. Ermitteln Sie
+										den Winkel \(\alpha \in [-180\si{\degree}, 180\si{\degree}]\) zwischen
+										Bewegungsrichtung und \(z\)-Achse, anhand der Messdaten, die Sie als .csv-Datei
+										herunterladen können. Auch hier liegt der Bewegung des Schlittens ein
+										Trapezprofil zugrunde. Die beiden Achsen des Sensors werden mit
+										unterschiedlicher Empfindlichkeit abgetastet, die Sie in Ihrem Rechenweg
+										berücksichtigen müssen. Die Empfindlichkeiten sind Ihnen gegeben, sodass Sie
+										ohne die Werte aus der Aufgabenstellung die gemessene Spannung in eine
+										Beschleunigung umrechnen können.</p>
+									<table class="table" style="text-align:center;">
+										<thead>
+											<tr>
+												<th style="text-align:center;">Zeichen</th>
+												<th style="text-align:center;">Name</th>
+												<th style="text-align:center;">Wert</th>
+												<th style="text-align:center;">Einheit</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{ lists.data_row('\\frac{\Delta U_{x}}{\Delta a_{x}}','Empfindlichkeit des
+											Sensors in \(x\)-Richtung','0.7','\si[per-mode = fraction]
+											{\V\square\second\per\metre}') }}
+											{{ lists.data_row('\\frac{\Delta U_{z}}{\Delta a_{z}}','Empfindlichkeit des
+											Sensors in \(z\)-Richtung','1.1','\si[per-mode = fraction]
+											{\V\square\second\per\metre}') }}
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<p>Bei dieser Aufgabe gilt es die Orientierung des Sensores herauszufinden, da
+										dieser um die \(y\)-Achse rotiert ist. Die Beschleunigung des Schlittens wirkt
+										daher nicht nur auf die \(x\)-Achse des Sensors, sondern auch auf seine
+										\(z\)-Achse, weshalb beide Spannungen im Graph angezeigt werden. Ermitteln Sie
+										den Winkel \(\alpha \in [-180\si{\degree}, 180\si{\degree}]\) zwischen
+										Bewegungsrichtung und \(z\)-Achse, anhand der Messdaten, die Sie als .csv-Datei
+										herunterladen können. Auch hier liegt der Bewegung des Schlittens ein
+										Trapezprofil zugrunde. Die beiden Achsen des Sensors werden mit
+										unterschiedlicher Empfindlichkeit abgetastet, die Sie in Ihrem Rechenweg
+										berücksichtigen müssen. Die Empfindlichkeiten sind Ihnen gegeben, sodass Sie
+										ohne die Werte aus der Aufgabenstellung die gemessene Spannung in eine
+										Beschleunigung umrechnen können.</p>
+									<table class="table" style="text-align:center;">
+										<thead>
+											<tr>
+												<th style="text-align:center;">Zeichen</th>
+												<th style="text-align:center;">Name</th>
+												<th style="text-align:center;">Wert</th>
+												<th style="text-align:center;">Einheit</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{ lists.data_row('\\frac{\Delta U_{x}}{\Delta a_{x}}','Empfindlichkeit des
+											Sensors in \(x\)-Richtung','0.7','\si[per-mode = fraction]
+											{\V\square\second\per\metre}') }}
+											{{ lists.data_row('\\frac{\Delta U_{z}}{\Delta a_{z}}','Empfindlichkeit des
+											Sensors in \(z\)-Richtung','1.1','\si[per-mode = fraction]
+											{\V\square\second\per\metre}') }}
+
+
+										</tbody>
+									</table>
+
+									<img src="/static/img/MechSys/Lab22.png" width="100%">
+								</div>
+							</div>
+
+
+
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer3">Aufgabe 3</a>
+					</h4>
+				</div>
+				<div id="exer3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<div class="row row-eq-height hidden-xs">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+									{{ img_show.img_show('/static/img/MechSys/Lab23.png') }}
+								</div>
+								<div class="container-fluid col-lg-8 col-md-8 col-sm-8 col-xs-8">
+									<p>Nachdem Sie in den ersten beiden Aufgabenteilen nun die mechanischen und
+										elektrischen Eigenschaften des Sensors kennen gelernt haben, sollen Sie sich im
+										dritten Teil noch mit den Eigenschaften des ADCs befassen, der die
+										Ausgangsspannung der Auswerteelektronik digitalisiert.</p>
+									<p>
+										Zu diesem Zweck fährt der Schlitten ein dreieckiges Beschleunigungsprofil ab,
+										bei dem die Beschleunigung linear von null bis zu einem Maximalwert ansteigt.
+										Der Bremsvorgang wiederrum findet mit einer konstant negativen Beschleunigung
+										statt. Sie erkennen im Graphen, den Sie wie gewohnt herunterladen können, dass
+										das Beschleunigungsprofil nicht linear, sondern treppenförmig ansteigt. Diese
+										deutlich sichtbare Treppenform entsteht durch eine zu geringe Auflösung des ADC.
+									</p>
+									<p>
+										Ermitteln Sie anhand der Treppenform die Quantisierungsintervallbreite der
+										Beschleunigung und berechnen Sie daraus die jeweilige Bitbreite des ADCs.</p>
+									<p> Folgende Paramter sind Ihnen gegeben:
+									</p>
+									<table class="table" style="text-align:center;">
+										<thead>
+											<tr>
+												<th style="text-align:center;">Zeichen</th>
+												<th style="text-align:center;">Name</th>
+												<th style="text-align:center;">Wert</th>
+												<th style="text-align:center;">Einheit</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{ lists.data_row('\\frac{\Delta U}{\Delta a}','Empfindlichkeit des
+											Sensors','0.39','\si[per-mode = fraction] {\V\square\second\per\metre}') }}
+											{{ lists.data_row('\pm a_{max}','Messbereich','12.82','\si[per-mode =
+											fraction] {\metre\per\square\second}') }}
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="visible-xs-block">
+								<div class="row container-fluid">
+									<p>Nachdem Sie in den ersten beiden Aufgabenteilen nun die mechanischen und
+										elektrischen Eigenschaften des Sensors kennen gelernt haben, sollen Sie sich im
+										dritten Teil noch mit den Eigenschaften des ADCs befassen, der die
+										Ausgangsspannung der Auswerteelektronik digitalisiert.</p>
+									<p>
+										Zu diesem Zweck fährt der Schlitten ein dreieckiges Beschleunigungsprofil ab,
+										bei dem die Beschleunigung linear von null bis zu einem Maximalwert ansteigt.
+										Der Bremsvorgang wiederrum findet mit einer konstant negativen Beschleunigung
+										statt. Sie erkennen im Graphen, den Sie wie gewohnt herunterladen können, dass
+										das Beschleunigungsprofil nicht linear, sondern treppenförmig ansteigt. Diese
+										deutlich sichtbare Treppenform entsteht durch eine zu geringe Auflösung des ADC.
+									</p>
+									<p>
+										Ermitteln Sie anhand der Treppenform die Quantisierungsintervallbreite der
+										Beschleunigung und berechnen Sie daraus die jeweilige Bitbreite des ADCs.</p>
+									<p> Folgende Paramter sind Ihnen gegeben:
+									</p>
+									<table class="table" style="text-align:center;">
+										<thead>
+											<tr>
+												<th style="text-align:center;">Zeichen</th>
+												<th style="text-align:center;">Name</th>
+												<th style="text-align:center;">Wert</th>
+												<th style="text-align:center;">Einheit</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{ lists.data_row('\\frac{\Delta U}{\Delta a}','Empfindlichkeit des
+											Sensors','0.39','\si[per-mode = fraction] {\V\square\second\per\metre}') }}
+											{{ lists.data_row('\pm a_{max}','Messbereich','12.82','\si[per-mode =
+											fraction] {\metre\per\square\second}') }}
+
+
+										</tbody>
+									</table>
+
+									<img src="/static/img/MechSys/Lab23.png" width="100%">
+								</div>
+							</div>
+
+
+
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

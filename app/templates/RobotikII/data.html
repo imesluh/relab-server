@@ -1,0 +1,57 @@
+{% extends "/RobotikII/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+{% endblock %}
+{% block title %}Technische Daten{% endblock %}
+{% block content %}
+<div class="panel-body">
+	<table id="ranking" class="table" style="text-align:center;">
+		<thead>
+			<tr>
+				<th style="text-align:center;">Zeichen</th>
+				<th style="text-align:center;">Name</th>
+				<th style="text-align:center;">Wert</th>
+				<th style="text-align:center;">Einheit</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{ lists.data_row('\Delta\psi','Winkel zwischen Fußpunkten auf Basisplattform',120,'°') }}
+			{{ lists.data_row('l_\mathrm{1}','Länge Primärarme',150,'\si{\milli\metre}') }}
+			{{ lists.data_row('r_\mathrm{M}','Motorradius',112,'\si{\milli\metre}') }}
+			{{ lists.data_row('l_\mathrm{2}','Länge Sekundärarme',435,'\si{\milli\metre}') }}
+			{{ lists.data_row('r_\mathrm{TCP}','Radius Endeffektorplattform',40,'\si{\milli\metre}') }}
+			{{ lists.data_row('\\theta_{i,\mathrm{min}}','Minimaler Drehwinkel der Motorachsen',-45,'°') }}
+			{{ lists.data_row('\\theta_{i,\mathrm{max}}','Maximaler Drehwinkel der Motorachsen',112,'°') }}
+			{{ lists.data_row('r_\mathrm{TS}','Radius des zylindrischen Arbeitsraumes des Endeffektors',200,'\si{\milli\metre}') }}
+			{{ lists.data_row('z_\mathrm{TS,min}','Minimale z-Koordinate des zylindrischen Arbeistraumes',320,'\si{\milli\metre}') }}
+			{{ lists.data_row('z_\mathrm{TS,max}','Maximale z-Koordinate des zylindrischen Arbeistraumes',550,'\si{\milli\metre}') }}
+		</tbody>
+	</table>
+	<div class="row row-eq-height">
+		<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+		<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6" style="display:inline-block; vertical-align:middle;">
+			<img src="/static/img/RobotikII/Labor11.png" width="100%" style="vertical-align:middle;">
+		</div>
+		<div class="col-lg-4 col-md-4 col-sm-5 col-xs-6" style="display:inline-block; vertical-align:middle;">
+			<img src="/static/img/RobotikII/Labor12.png" width="100%" style="vertical-align:middle;">
+		</div>
+		<div class="col-lg-2 col-md-2 col-sm-1 col-xs-0"></div>
+	</div>
+</div>
+{% endblock %}
+{% block own_js %}
+{% endblock %}

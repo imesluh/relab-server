@@ -1,0 +1,26 @@
+[
+			{
+				"Name": "Event",
+				"Title": "Event 1: Dieser Text wird im Kalender angezeigt!",
+				"Start": "2022-11-9T10:00:00",
+				"End": "2022-11-9T23:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Pendel in der Hörsaalübung",
+				"Start": "2022-12-12T12:00:00",
+				"End": "2022-12-12T17:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Versuchsstand blockiert",
+				"Start": "2022-12-20T08:30:00",
+				"End": "2022-12-20T11:30:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			}
+]

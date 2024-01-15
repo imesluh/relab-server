@@ -1,0 +1,246 @@
+{% extends "/MechSys/base.html" %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% import '/macros/groups.html' as groups %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script>var mainroute = '/MechSys/rest/be/CI';</script>
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/MechSys/stream.js"></script>
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                {{ buttons.choose_dd(1,['high','low (VPN)'],1,'stream_select') }}
+            </div>
+        </div>
+    </div>
+    <div id="control_panel" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="panel panel-default" id="panel_eig_val">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <span id="gly_exer1" class="glyphicon glyphicon-edit"></span> Zustandsregelung <a class="pull-right"
+                                                                                                      id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row row-eq-height" id="checkBox">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <p class="text-left">Identifizierten Parameter aus Labor 3 nutzen?</p>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                        <input id="check1" type="checkbox" name="eigenwert" value="" />
+                    </div>
+                </div>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div id="part_pol" class="collapse in">
+                        <div id="eigenVal">
+                            <br>
+                            {% for group in gp["Polvorgabe"] %}
+                            {{ groups.input_group(group.class, group.name, group.label, group.groups) }}
+                            {% endfor %}
+                            <br>
+                            {% for group in gp["Rueckfuehrung"] %}
+                            {{ groups.input_group(group.class, group.name, group.label, group.groups) }}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    {{ boxes.help('Drücken Sie "Start", um Ihre Polstellenkonfiguration zu testen. Wenn die Polstellen durch den Rückführvektor korrekt platziert wurden, startet die 				Aufschwingregelung.') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="polPanel">
+                            {% for slider in sliderd["Eigenvalue"] %}
+                            {{ sliders.slider(slider.pos, slider.slider_id, slider.slider_name, slider.type, slider.m_min, slider.m_max, slider.m_value, slider.m_step) }}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
+                                     style="padding-top:10px;height:14px;padding-bottom:20px" id="messagebox">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    {{ boxes.help('Drücken Sie "Start", um mit der Aufschwingregelung zu starten. Mit "Reset" können Sie den Versuchsstand neustarten. Dies kann einige Minuten dauern.') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-eq-height">
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                <button id="bt_reset" type="button" class="btn btn-default btn-lg">Reset</button>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                                <div class="btn-group btn-group-lg" role="group">
+                                    <button id="bt_stop" type="button" class="btn btn-default">Stop</button>
+                                    <button id="bt_start1" type="button" class="btn btn-primary start">Start</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="accept1">
+                    </div>
+                    <div class="accept1">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                {{ boxes.help('Drücken Sie "Accept", um Ihre Reglerparameter zu übernehmen, und "Change", um diese zu ändern.') }}
+                            </div>
+                        </div>
+                        <div class="row row-eq-height">
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <button id="bt_accept1" type="button" class="btn btn-default btn-lg">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bewertung">
+                        <hr>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            {{ boxes.help('Drücken Sie "Bewerten", um Ihre Punktzahl zu ermitteln. Dies dauert 10 Sekunden.') }}
+                        </div>
+                    </div>
+                    <div class="row row-eq-height bewertung">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" id="messagebox2">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div class="btn-group btn-group-lg" role="group">
+                                <button id="bt_back" type="button" class="btn btn-default">Zurück</button>
+                                <button id="bt_bewerten" type="button" class="btn btn-primary">Bewerten</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" id="panel_vorfilter">
+            <div class="panel-heading">
+                <label class="panel-title"><span id="gly_exer2" class="glyphicon glyphicon-edit"></span>
+                    Vorfilter</label>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            {% for group in gp["Vorfilter"] %}
+                            {{ groups.input_group(group.class, group.name, group.label, group.groups) }}
+                            {% endfor %}
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <button id="bt_accept2" type="button" class="btn btn-default btn-lg">Accept</button>
+                        </div>
+                    </div>
+                    <hr>
+                    {% for slider in sliderd["Fuehrungsgroesse"] %}
+                    {{ sliders.slider(slider.pos, slider.slider_id, slider.slider_name, slider.type, slider.m_min, slider.m_max, slider.m_value, slider.m_step) }}
+                    {% endfor %}
+                    <div id="challenge_div" class="row">
+                        <hr>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                            <center>{{ boxes.help('Sie können nun die Challenge starten.') }}</center>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <button id="bt_challenge" type="button" class="btn btn-default btn-lg">Challenge</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: relative; height:300px">
+    <div id="left_input" style="height:300px; width:105px; position: absolute">
+        <input type="text" class="custom-input pull-right" id="left_max" size="5" maxlength="5"
+               value="{{ data['ranges'][1][1]}}" style="position: absolute; top:30px; right: 0px; text-align:right;" />
+        <div style="position: absolute; top:118px; right: 0px;">
+            {{ buttons.dd_axis(1,data["names"], data["colors"], id="left_button") }}
+        </div>
+        <input type="text" class="custom-input pull-right" id="left_min" size="5" maxlength="5"
+               value="{{ data['ranges'][1][0]}}" style="position: absolute; top:238px; right: 0px;  text-align:right;" />
+    </div>
+    <div id="realtimegraph" class="graph" style="height:300px; position: absolute; left: 105px;">
+    </div>
+    <div id="right_input" style="height:300px; width:105px; position: absolute; right: 0px;">
+        <input type="text" class="custom-input" id="right_max" size="5" maxlength="5" value="{{ data['ranges'][2][1]}}"
+               style="position: absolute; top:30px; left: 0px;" />
+        <input type="text" class="custom-input" id="right_min" size="5" maxlength="5" value="{{ data['ranges'][2][0]}}"
+               style="position: absolute; top:238px; left: 0px;" />
+        <div style="position: absolute; top:118px; left: 0px;">
+            {{ buttons.dd_axis(2,data["names"], data["colors"], id="right_button") }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/MechSys/chart.js"></script> <!--Needs to be placed here before creating var chart-->
+<script>
+    var ranges = {{ data| safe }}["ranges"]
+    var colors = {{ data| safe }}["colors"]
+    var chart = new runChartJs(20, 300, 'cardinal');
+    function changeOpacity() {
+       chart.changeGraph(function () {
+            $('.dd_axis').each(function () {
+                $('#data' + String($(this).val())).css("opacity", 1)
+            });
+        });
+    }
+    $(".d_axis li a").click(function () {
+        ddButton = $(this).parent().parent().prev()
+        if (!ddButton.is('button')) {
+            if (ddButton.prev().is('button')) {
+                ddButton = ddButton.prev();
+            } else { alert('Wenden Sie sich bitte an den Systemadministrator'); }
+        }
+        $('.group').css('opacity', 0)
+        //dd_buttom = $(this).parent().parent().prev()
+        ddButton.css('color', $(this).css('color'));
+        ddButton.html($(this).html() + ' <span class="caret" style="color:black;"><span>');
+        var index = $(this).parent().index()
+        ddButton.val(index);
+        changeOpacity();
+        //update(_callback);
+    });
+</script>
+<script src="/static/js/custom/MechSys/custom.js"></script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/MechSys/websocket.js"></script>
+<script src="/static/js/custom/MechSys/lab4/websocket_specific.js"></script>
+<script src="/static/js/custom/MechSys/lab4/lab4.js"></script>
+
+{% endblock %}

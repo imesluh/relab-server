@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/jpg" href="/static/img/imes.jpg">
+	<link rel="stylesheet" href="/static/css/lib/bootstrap.min.css">
+	<script src="/static/js/lib/jquery.min.js"></script>
+	<script src="/static/js/lib/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/custom/base.css">
+	<title>{% block window_title %}{% endblock %}</title>
+	{% block head %}
+	{% endblock %}
+</head>
+
+<body>
+	<div id="website" class="container-fluid" style="position: absolute;">
+		<div class="row row-eq-height" style="position: relative;">
+			<div class="col-xl-2 col-lg-1 hidden-md hidden-sm hidden-xs">
+			</div>
+			<div class="col-xl-8 col-lg-10 col-md-12 col-sm-12 col-xs-12" style="background-color: rgb(255,255,255);">
+				<div id="page-header" class="row row-eq-height">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-0 row-eg-height">
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 row-eg-height">
+						<h1 class="text-center">{% block title %}{% endblock %}</h1><br />
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-2 row-eg-height">
+						<img src="/static/img/SVG/LOGO_imes.svg" class="pull-right visible-xs-block"
+							style="margin-top: 10px; height:60px;">
+						<img src="/static/img/SVG/LOGO_imes_mit_Schrift.svg" class="pull-right hidden-xs" width="80%"
+							style="margin-top: 10px; height: 100%;">
+					</div>
+				</div>
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+								data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="https://relab.imes.uni-hannover.de">ReLab</a>
+						</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li class="{{ location.main}}"><a href="{{ url_for('robotikI_main') }}">Startseite</a></li>
+								<li class="{{ location.info.link }}">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Informationen <b class="caret"></b></a>
+
+									<ul class="dropdown-menu">
+										<li>
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown">Anleitungen <b
+													class="caret"></b></a>
+											<ul class="dropdown-menu">
+												{% for lab in labs %}
+												<li class="{{ location.info.Labs[loop.index0] }}"><a
+														href="{{ url_for('robotikI_help_labs', lab=lab.name) }}">{{ lab.name
+														}}</a></li>
+												{% endfor %}
+											</ul>
+										</li>
+										<li class="divider"></li>
+										<li><a href="{{ url_for('robotikI_help_data') }}">Daten</a></li>
+									</ul>
+								</li>
+								<li class="{{ location.booking }}"><a href="{{ url_for('robotikI_bi') }}">Buchung</a></li>
+								<li class="{{ location.control }}"><a href="{{ url_for('robotikI_ci') }}">Start</a></li>
+								<li class="{{ location.solution.link }}" style="visibility: visible;">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Lösung <b class="caret"></b></a>
+
+									<ul class="dropdown-menu">
+										{% for lab in labs %}
+										{% if lab.solution == 1 %}
+										<li class="{{ location.solution.Labs[loop.index0] }}"><a
+												href="{{ url_for('robotikI_solutions', lab=lab.name) }}">{{ lab.name }}</a></li>
+										{% endif %}
+										{% endfor %}
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="container-fluid text-left">
+					{% block content %}{% endblock %}
+				</div>
+			</div>
+			<div class="col-xl-2 col-lg-1  hidden-md hidden-sm hidden-xs">
+			</div>
+		</div>
+	</div>
+	</div>
+	{% block messages %}
+	{% endblock %}
+</body>
+
+</html>
+<script src="/static/js/custom/base.js"></script>
+<script>
+	$(".navbar-nav li").on("click", function () {
+		$(".navbar-nav li").removeClass("active");
+		$(this).addClass("active");
+	});
+	$(document).ready(function () {
+		$('.navbar a.dropdown-toggle').on('click', function (e) {
+			var $el = $(this);
+			var $parent = $(this).offsetParent(".dropdown-menu");
+			$(this).parent("li").toggleClass('open');
+
+			if (!$parent.parent().hasClass('nav')) {
+				$el.next().css({ "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 });
+			}
+
+			$('.nav li.open').not($(this).parents("li")).removeClass("open");
+
+			return false;
+		});
+	});
+</script>
+{% block own_js %}{% endblock %}

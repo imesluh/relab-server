@@ -1,0 +1,231 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/buttons.html' as buttons %}
+{% import '/macros/textbox.html' as boxes %}
+{% import '/macros/sliders.html' as sliders %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<link rel='stylesheet' href='/static/css/lib/bootstrap-dialog.min.css' />
+<script>var mainroute = '/RobotikI/rest/be/CI';</script>
+<script src="/static/js/lib/bootstrap-dialog.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/static/css/custom/control.css">
+<link rel="stylesheet" href="/static/css/custom/table_responsive.css">
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/static/js/lib/bootbox.min.js"></script>
+<script type="text/javascript" src="/static/js/lib/janus.js"></script>
+<script type="text/javascript" src="/static/js/lib/adapter.js"></script>
+<script type="text/javascript" src="/static/js/lib/spin.min.js"></script>
+<script type="text/javascript" src="/static/js/custom/RobotikI/stream.js"></script>
+<script src="/static/js/lib/d3.v3.min.js"></script>
+
+
+{% endblock %}
+{% block title %}Control Interface{% endblock %}
+{% block content %}
+<div id="VideoControlPanel" class="row row-eq-height">
+    <div id="video" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="row">
+            <div class="container-fluid" id="stream"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="vid_message" style="color:red;">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            	 {{ buttons.choose_dd(0,['high','low (VPN)'],0,'stream_select') }}
+                <!--{{ buttons.choose_dd(1,['high','low (VPN)'],1,'stream_select') }}-->
+            </div>
+        </div>
+    </div>
+    <div id="controlpanel" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="panel-group" id="panel_group_1">
+            <div class="panel panel-default" id="panel_ges">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <span id="gly_exer1" class="glyphicon glyphicon-edit"></span> Direkte Kinematik <a
+                            class="pull-right" id="clock" style="color:black; font-weight:bold; font-size:14px"></a>
+                    </h4>
+                </div>
+                <div class="container-fluid">
+                    <style>
+                        .table > tbody > tr > td, #validation-column{
+                            vertical-align: middle;
+                        }
+                    </style>
+                    <div class="row" style="margin: 10px;">
+                    		<div id="task1" style="visibility:visible; position: relative; top:0px; display:inline;">
+	                    		<div id="ex1-textbox" style="position: relative;">
+	                        	{{ boxes.help('Geben Sie alle gesuchten Koordinaten an, wählen Sie die Positionen im Arbeitsraum (siehe Aufgabenstellung) aus und bestätigen Sie anschließend mit "Senden". Bei korrekter Eingabe können Sie die Position anfahren.') }}
+	                    		</div>
+	                        <div class="table-responsive" id="exerciseTable1">
+	                            <table class="table ">
+	                                <thead>
+	                                  <tr class="row">
+	                                    <th class="col-4">
+	                                        joint space (°) <br>
+	                                        &nbsp;
+	                                    </th>
+	                                    <th class="col-4">
+	                                        task space (in mm): <br> 
+	                                        \( _\mathrm{(0)}\boldsymbol{r}_\mathrm{E} \)
+	                                    </th>
+	                                    <th class="col-4"> 
+														gültig? <br>
+	                                       &nbsp;	                                    
+	                                    </th>
+	                                  </tr>
+	                                </thead>
+	                                <tbody> 
+	                                    {% for n in range(5) %}
+	                                    <tr class="row">
+	                                        <td class="col-4">
+	                                           <label><span id="position{{n}}"></span></label>
+	                                        </td> 
+	                                        <td class="col-4">
+	                                            <div>
+	                                                <label> <input type="text" min="1" max="5" style="width: 2.5em;" id="kartKorX{{n}}" placeholder="x"/></label>
+	                                                <label> <input type="text" min="1" max="5" style="width: 2.5em;" id="kartKorY{{n}}" placeholder="y"/></label>  
+	                                                <label> <input type="text" min="1" max="5" style="width: 2.5em;" id="kartKorZ{{n}}" placeholder="z"/></label>
+	                                            </div>
+	                                        </td>
+	                                        <td id="validation-column" class="col-4">
+	                                            <div class="warpper d-flex align-items-center">
+	                                                <input class="form-check-input" type="checkbox" value="" id="checkbox{{n}}">
+	                                                {% set anfId = "anfahren" + n | string -%}
+	                                                {{
+	                                                    buttons.button(anfId,'Los!', gly='', size='start', style='margin-left: 10px;', type="btn-default float-right")
+	                                                }}
+	                                            </div>
+	                                        </td>
+	                                    </tr>
+	                                    {% endfor %}
+	                                </tbody>
+	                            </table>
+	                        </div>
+	                        <!--</div class="">  ohne Funktion?-->
+                        </div>
+						  </div>
+						  <div class="row" style="margin: 0 auto;">
+                        <div id="task-quiz" style="visibility:hidden; position: relative; top:0px; display:none;">
+                            <div id="quiz-textbox" style="position: relative; margin:10px; width: 100%;">
+                                {{ boxes.help('Platzhalter Quizfrage 1', id='quiz-textbox') }}
+                            </div>
+                            <div class="row" style="margin: 10px;">
+                                <div id="quiz-table" style="width: 100%;">
+                                    <table class="table">
+					                     	<thead>
+					                            <tr class="row">
+					                                <th class="col">
+					                                    Wählen Sie die zutreffenden Antworten aus:
+					                                </th>
+					                            </tr>
+					                        </thead>
+					                        <tbody>
+					                            {% for n in range(5) %}
+			                                    <tr class="row">
+			                                        <td class="col-10">
+			                                           <label><span id="answer{{n}}"></span></label>
+			                                        <td id="checkbox-column" class="col-2">
+			                                            <div class="warpper d-flex align-items-center">
+			                                                <input class="form-check-input" type="checkbox" value="" id="quiz-checkbox{{n}}">
+			                                            </div>
+			                                        </td>
+			                                    </tr>
+			                                  {% endfor %}
+					                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+						  <div class='row'>
+                        {{
+                            buttons.button('btn_download','Download', gly='glyphicon-download', type="btn-default pull-left")
+                        }}
+                        {{                        
+                            buttons.button('btn_debug','DebugMode', gly='', type="btn-default pull-left", style="visibility:hidden")
+                        }}
+                        {{
+                            buttons.button('btn_send','Senden', gly='', type="btn-default pull-right")
+                        }}
+                        {{
+                            buttons.button('btn_quiz','Quiz', gly='', type="btn-default pull-right", style="visibility:hidden")
+                        }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: relative; height:300px">
+    <div id="left_input" style="height:300px; width:105px; position: absolute">
+        <input type="text" class="custom-input pull-right" id="left_max" size="5" maxlength="5"
+            value="{{ data['ranges'][1][1]}}" style="position: absolute; top:30px; right: 0px; text-align:right;" />
+        <div style="position: absolute; top:118px; right: 0px;">
+            {{ buttons.dd_axis(1,data["names"], data["colors"], id="left_button") }}
+        </div>
+        <input type="text" class="custom-input pull-right" id="left_min" size="5" maxlength="5"
+            value="{{ data['ranges'][1][0]}}" style="position: absolute; top:238px; right: 0px;  text-align:right;" />
+    </div>
+    <div id="realtimegraph" class="graph" style="height:300px; position: absolute; left: 105px;">
+    </div>
+    <div id="right_input" style="height:300px; width:105px; position: absolute; right: 0px;">
+        <input type="text" class="custom-input" id="right_max" size="5" maxlength="5" value="{{ data['ranges'][3][1]}}"
+            style="position: absolute; top:30px; left: 0px;" />
+        <input type="text" class="custom-input" id="right_min" size="5" maxlength="5" value="{{ data['ranges'][3][0]}}"
+            style="position: absolute; top:238px; left: 0px;" />
+        <div style="position: absolute; top:118px; left: 0px;">
+            {{ buttons.dd_axis(3,data["names"], data["colors"], id="right_button") }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block messages %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/RobotikI/chart.js"></script> 
+<script>
+    var ranges = {{ data| safe }}["ranges"];
+    var colors = {{ data| safe }}["colors"];
+    var chart = new runChartJs(15, 70, 'basis');
+    function changeOpacity() {
+       chart.changeGraph(function () {
+            $('.dd_axis').each(function () {
+                $('#data' + String($(this).val())).css("opacity", 1);
+            });
+        });
+    }
+    $(".d_axis li a").click(function () {
+        ddButton = $(this).parent().parent().prev()
+        if (!ddButton.is('button')) {
+            if (ddButton.prev().is('button')) {
+                ddButton = ddButton.prev();
+            } else { alert('Wenden Sie sich bitte an den Systemadministrator'); }
+        }
+        $('.group').css('opacity', 0)
+        ddButton.css('color', $(this).css('color'));
+        ddButton.html($(this).html() + ' <span class="caret" style="color:black;"><span>');
+        var index = $(this).parent().index();
+        ddButton.val(index);
+        changeOpacity();
+    });
+</script>
+<script src="/static/js/custom/input_number.js"></script>
+<script src="/static/js/custom/RobotikI/custom.js"></script>
+<script src="/static/js/custom/RobotikI/lab2/lab2.js"></script>
+<script src="/static/js/lib/socket.io.min.js"></script>
+<script src="/static/js/custom/RobotikI/websocket.js"></script>
+{% endblock %}

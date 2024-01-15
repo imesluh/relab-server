@@ -1,0 +1,33 @@
+{% macro input_group(class, name, label, groups) -%}
+<div class="row row-eq-height">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <p class="text-left">{{name}}</p>
+    </div>
+    {% for group in groups %}
+    {% if group != "none" %}
+    {% set len = 10 // loop.length %}
+    <div class="col-lg-{{ len }} col-md-{{ len }} col-sm-{{ len }} col-xs-{{ len }} text-center">
+        <input class="number" type="text" maxlength="9" size="5" {{class}}>
+    </div>
+    {% else %}
+    <div class="col-lg-{{ len }} col-md-{{ len }} col-sm-{{ len }} col-xs-{{ len }} text-center"></div>
+    {% endif %}
+    {% endfor%}
+</div>
+{% if label == "True" %}
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+    </div>
+    {% for group in groups %}
+    {% if group != "none" %}
+    {% set len = 10 // loop.length %}
+    <div class="col-lg-{{ len }} col-md-{{ len }} col-sm-{{ len }} col-xs-{{ len }} " style="text-align: center">
+        <label>{{group}}</label>
+    </div>
+    {% else %}
+    <div class="col-lg-{{ len }} col-md-{{ len }} col-sm-{{ len }} col-xs-{{ len }} text-center"></div>
+    {% endif %}
+    {% endfor%}
+</div>
+{% endif %}
+{%- endmacro %}

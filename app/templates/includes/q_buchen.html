@@ -1,0 +1,42 @@
+{% import '/macros/buttons.html' as buttons %}
+<div id="fullCalModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span
+						class="sr-only">close</span></button>
+				<h4 id="modalTitle" class="modal-title">Buchen des Versuchsstandes</h4>
+			</div>
+			<div id="modalBody" class="modal-body">
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">Für welches Labor möchten Sie den Versuchsstand
+						buchen?</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						{{ buttons.choose_dd(0, labnames,1) }}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="row hidden-xs">
+					<div class="col-lg-8 col-md-8 col-sm-8"></div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+						<div class="btn-group btn-group pull-right" role="group">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+							<button id="book-btn" class="btn btn-primary book-btn">Buchen</button>
+						</div>
+					</div>
+				</div>
+				<div class="visible-xs-block">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="btn-group btn-group pull-right" role="group">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+								<button id="book-btn" class="btn btn-primary book-btn">Buchen</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

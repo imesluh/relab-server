@@ -1,0 +1,18 @@
+[
+			{
+				"Name": "Event",
+				"Title": "Event 1: Dieser Text wird im Kalender angezeigt!",
+				"Start": "2022-11-9T10:00:00",
+				"End": "2022-11-9T23:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Event 2: Dieser Text wird im Kalender angezeigt.",
+				"Start": "2022-10-9T10:00:00",
+				"End": "2022-10-9T23:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
+			}
+]

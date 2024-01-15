@@ -1,0 +1,156 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/img_show.html' as img_show %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+<link rel="stylesheet" href="/static/css/custom/img_show.css">
+<style>
+	#website {
+		min-width: 530px;
+	}
+</style>
+{% endblock %}
+{% block title %}Labor 2{% endblock %}
+{% block content %}
+<div class="row row-eq-height">
+	<div class="container" id="infos">
+		<div class="panel-group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#allgemein">Allgemeine Hinweise</a>
+					</h4>
+				</div>
+				<div id="allgemein" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Herzlich Willkommen zum Remote Laboratory (ReLab) der Lehrveranstaltung Robotik I (WiSe 23/24)!
+							</p>
+							<p>
+								Das ReLab ist als <u>freiwillige</u> Ergänzung zur Computerübung anzusehen und ist als weitere Vertiefung der Vorlesungsinhalte gedacht.
+								Die Versuche des ReLabs basieren auf den Computerübungen, deren entsprechende Aufgaben Sie im Vorfeld bereits bearbeitet haben sollten.
+								Ihre dort programmierten Lösungswege können Sie zur Bearbeitung des ReLabs verwenden.
+								Die Computerübungen und alle nötigen Informationen finden Sie an folgender Stelle:
+							</p>
+							<a href="https://grader.mathworks.com/courses/124667-robotik-i-computerubung-wise-23-24"> Computerübung (Matlab Grader)</a>
+							<p>&nbsp;</p>
+							{{ img_show.img_show('/static/img/RobotikI/RobotikI_testbench.png', width="50%") }}
+							<p>&nbsp;</p>
+							<p>
+								Auf dem Tisch sind fünf blaue Container (A,B,C,D,E) angebracht, in welche der orangefarbige Stern vom Roboter eingesetzt werden kann.
+								Die Struktur dieses Industrieroboters stellt eine serielle kinematische Kette mit sechs angetriebenen Gelenken dar.
+								Das imes bedankt sich bei
+								<a href="https://www.vorausrobotik.com/"> voraus robotik</a>
+								(ehemals Yuanda Robotics) für die Bereitstellung von Parametern und Matlabfunktionen des Roboters.
+							</p>
+							<p>&nbsp;</p>
+							<h4>Technische Hinweise</h4>
+							<p>
+								Allgemein gültige Hinweise zur Durchführung von Versuchen können Sie auf der
+								<a href="https://relab.imes.uni-hannover.de/help/relab/"> Hilfeseite</a>
+								einsehen. Sollten Sie Fragen zur Buchung des Versuchsstands haben, finden Sie eine Anleitung
+								<a href="https://relab.imes.uni-hannover.de/help/booking/"> an dieser Stelle</a>.
+							</p>
+							<p>Sollte die Website in Ihrem Versuch doch einmal abnormales Verhalten zeigen, schließen Sie bitte das Fenster, löschen den Cache und starten Sie den Versuch neu.
+								Alternativ können Sie ein neues Inkognito-Fenster Ihres Browsers nutzen, in welchem kein Cache aus vorherigen Sitzungen verwendet wird. Sollte das Problem dann immer noch auftreten, melden Sie dieses bitte an die angebene Mail-Adresse.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer1">Aufgabenteil</a>
+					</h4>
+				</div>
+				<div id="exer1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Im Aufgabenteil dieses Laborversuchs erhalten Sie verschiedene Roboter-Posen im <i>Jointspace</i>. Ihre Aufgabe ist es zu bestimmen,
+								ob diese gültige Konfigurationen hinsichtlich eines kartesischen Arbeitsraumes darstellen.
+								<!--Endeffektor in diesen Posen im gültigen Arbeitsraum befindet.-->
+								Dieser ist als zylindrisches Volumen mit der Höhe 1000 mm und dem Radius 1000 mm um das \(\mathrm{\left(KS\right)_0}\) des Roboters definiert.
+								Beachten Sie die Einschränkung, dass sicherheitsbedingt nur Positionen mit mind. 200 mm Abstand zur Tischplatte gültig sein sollen, um eine Kollision mit dem Greifer zu vermeiden.
+								Für die \(z\)-Koordinate des Endeffektors gilt somit:
+								\[\begin{align*}
+									\text{200 mm} \leq {_{\left(\text{0}\right)}z_\text{E}} \leq \text{1000 mm}.
+								\end{align*}\]
+								Zur Lösung der Aufgabe müssen Sie entsprechend zunächst die korrespondierenden Positionen des Endeffektors in <u>kartesischen</u> Koordinaten bestimmen.
+								Sie können hierzu Ihre Implementierung der <i>direkten Kinematik</i> aus der Computerübung verwenden und anschließend die Einhaltung des Arbeitsraums überprüfen.
+							</p>
+							<p>
+								Prüfen Sie zusätzlich, ob alle weiteren Segmente (ausgenommen Segment 1) den genannten Arbeitsraum einhalten. Diese Segmente können mit der Umgebung kollidieren und müssen daher zur Kollisionsvermeidung berücksichtigt werden.
+								Erfüllt eine Pose auch diese Bedingung, kann Sie als gültig angesehen und dem Roboter übergeben werden.
+							</p>
+							<p>
+								Ihnen stehen zur Bearbeitung die kinematischen Parameter des Roboters zur Verfügung, die Sie unter dem Reiter <i>Informationen > Daten</i> abrufen können.
+							</p>
+							<p>
+								Die Lernziele dieses Labors sind:
+							</p>
+							<ul>
+								<li>der Umgang mit Denavit-Hartenberg-Parametern</li>
+								<li>Bestimmung von Transformationsmatrizen nach DH-Konvention</li>
+								<li>Modellierung der direkten Kinematik serieller Roboter</li>
+								<li>Sicherheitsfunktionen (z.B. Arbeitsräume)</li>
+							</ul>
+							<p>&nbsp;</p>
+							<h4>Kinematische Parameter des Yu</h4>
+							<p>&nbsp;</p>
+							{{ img_show.img_show('/static/img/RobotikI/Lab2_kinParam.png', width="50%") }}
+							<p>&nbsp;</p>
+							<!--<p>Die kinematischen Parameter können Sie der Tabelle unter <i>Informationen > Daten </i> entnehmen.</p>-->
+							<!--<p>
+								Dieser Laborversuch befindet sich momentan noch in Vorbereitung. Sobald die Bearbeitung möglich ist, werden Sie im Rahmen der Lehrveranstaltung informiert.
+							</p>-->
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" href="#exer2">Quiz</a>
+					</h4>
+				</div>
+				<div id="exer2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<span class="help-block text-left">
+							<p>
+								Am Ende dieses Labors werden fünf Multiple-Choice Fragen gestellt, welche auch so in der Klausur gefragt werden könnten. Die Fragen sind jeweils mit 500 Punkten versehen.
+								Bei jeder Multiple-Choice Frage werden diese Punkte durch die Anzahl an Versuche, die Sie zur korrekten Beantwortung benötigt haben, geteilt.
+								Je mehr Versuche Sie also benötigen, desto weniger Punkte bekommen Sie für die Frage. Sollten Sie das Labor wiederholen, erhalten Sie keine aktualisierte Punktzahl.
+								Sie können diese Möglichkeit also <u>nicht</u> nutzen, um Ihr Scoring zu verbessern.
+							</p>
+							<p>
+								Immer wenn Sie eine Frage korrekt beantworten, erhält der Roboter die Anweisung den Stern zu greifen und - beginnend mit Behälter A - den Stern in den nachfolgenden Behälter zu transportieren.
+								Sie können Ihren Fortschritt somit anhand der Sternposition beobachten und sollten diesen abschließend zum letzten Behälter E transportiert haben.
+							</p>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- The Modal -->
+{% include '/includes/modal_show.html' %}
+{% endblock %}
+{% block own_js %}
+<script src="/static/js/custom/img.js"></script>
+{% endblock %}

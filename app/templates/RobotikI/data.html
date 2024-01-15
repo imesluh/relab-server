@@ -1,0 +1,44 @@
+{% extends "/RobotikI/base.html" %}
+{% import '/macros/listings.html' as lists %}
+{% block window_title %}ReLab{% endblock %}
+{% block head %}
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+{% endblock %}
+{% block title %}Technische Daten{% endblock %}
+{% block content %}
+<div class="panel-body">
+	<table id="ranking" class="table" style="text-align:center;">
+		<thead>
+			<tr>
+				<th style="text-align:center;">Zeichen</th>
+				<th style="text-align:center;">Name</th>
+				<th style="text-align:center;">Wert</th>
+				<th style="text-align:center;">Einheit</th>
+			</tr>
+		</thead>
+		<tbody>	
+			{{ lists.data_row('l_{1}','Länge 1','174.95','\si{mm}') }}
+			{{ lists.data_row('l_{2}','Länge 2','179.1','\si{mm}') }}
+			{{ lists.data_row('l_{3}','Länge 3','450.0','\si{mm}') }}
+			{{ lists.data_row('l_{4}','Länge 4','175.1','\si{mm}') }}
+			{{ lists.data_row('l_{5}','Länge 5','407.8','\si{mm}') }}
+			{{ lists.data_row('l_{6}','Länge 6','142.2','\si{mm}') }}
+			{{ lists.data_row('l_{7}','Länge 7','142.2','\si{mm}') }}
+			{{ lists.data_row('l_{8}','Länge 8','329.0','\si{mm}') }}	
+	</table>
+</div>
+{% endblock %}
+{% block own_js %}
+{% endblock %}

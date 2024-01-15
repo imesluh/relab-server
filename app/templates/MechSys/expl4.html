@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/jpg" href="/static/img/imes.jpg">
+	<link rel="stylesheet" href="/static/css/lib/bootstrap.min.css">
+	<script type="text/x-mathjax-config">
+
+    MathJax.Hub.Config({
+    extensions: ["tex2jax.js","[Contrib]/siunitx/siunitx.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+	</script>
+	<script src="/static/js/lib/MathJax-2.7.0/MathJax.js"></script>
+	<script src="/static/js/lib/jquery.min.js"></script>
+	<script src="/static/js/lib/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/static/css/custom/base.css">
+	<title>Bemerkung zum Rückführvektor</title>
+</head>
+
+<body>
+	<div id="website" class="container-fluid" style="position: absolute;">
+		<div class="row row-eq-height" style="position: relative;">
+			<div class="col-lg-2 col-md-1 hidden-sm hidden-xs">
+			</div>
+			<div class="col-lg-8 col-md-10 col-sm-12 col-xs-12" style="background-color: rgb(255,255,255);">
+				<div id="page-header" class="row row-eq-height">
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-0 row-eg-height">
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 row-eg-height">
+						<h1 class="text-center">Hinweis</h1><br />
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-2 row-eg-height">
+						<img src="/static/img/LOGO_imes.png" class="pull-right visible-xs-block"
+							style="margin-top: 10px; height:60px;">
+						<img src="/static/img/imes_logo_g.png" class="pull-right hidden-xs" width="80%"
+							style="margin-top: 10px;">
+					</div>
+				</div>
+				<div class="container-fluid text-left">
+					<div class="row row-eq-height">
+						<div class="col-lg-12 col-md-12 col-sm-12">
+							<p>
+								Die Rückführung des Pendelwinkels auf den Systemeingang (die Schlittenbeschleunigung)
+								ist positiv, wohingegen die Rückführung der Schlittenposition negativ ist.
+								Da im geschlossenen Regelkreis die Rückführung von der Sollvorgabe subtrahiert wird,
+								führt der Rückführvektor für den Schlitten zu einer Beschleunigung in die
+								entgegengesetzte Richtung.
+								Bei einer positiven Lageabweichung ist die Beschleunigung des Schlittens ebenfalls
+								positiv und die Abweichung vergrößert sich. Ohne das Teilsystem Pendel wäre der reine
+								Schlitten mit der gewählten Rückführung also instabil. In der unteren Tabelle ist das
+								Phänomen anhand eines Vergleichs zwischen der Sollwertfolge für einen vollständig
+								negativen Rückführvektor und einer für den Schlitten positiven Rückführung gezeigt. Die
+								gewünschte Sollposition ist gestrichelt markiert.</p>
+							<table class="table" style="text-align:center;">
+								<thead>
+									<tr>
+										<th style="text-align:center;">\(K_\mathrm{x} > 0, K_\mathrm{\varphi} > 0 \)
+										</th>
+										<th style="text-align:center;">\(K_\mathrm{x} > 0, K_\mathrm{\varphi} < 0
+												\)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="center" width="50%" style="border-right: 1px solid #ddd;">
+											<img src="/static/img/MechSys/K11.png" width="70%">
+											<p>Zunächst bewegt sich der Schlitten aufgrund der negativen Rückführung in
+												Richtung der gewünschten Zielposition.</p>
+										</td>
+										<td align="center" width="50%">
+											<img src="/static/img/MechSys/K21.png" width="100%">
+											<p>Zunächst bewegt sich der Schlitten aufgrund der positiven Rückführung von
+												der gewünschten Zielposition weg.</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" width="50%" style="border-right: 1px solid #ddd;">
+											<img src="/static/img/MechSys/K12.png" width="70%">
+											<p>Aufgrund der Massenträgheit des Pendels lenkt sich dieses aus und die
+												Beschleunigung aufgrund der Rückführung des Pendelwinkels <font
+													color="green">\(u_\mathrm{\varphi}\)</font> überwiegt ab einer
+												gewissen Auslenkung den Anteil des Schlittens <font color="#342D7E">
+													\(u_\mathrm{x}\)</font>. Dies wird dadurch verstärkt, dass aufgrund
+												der Annäherung des Schlittens an die Solllage (verringerte
+												Regelabweichung) der Anteil der Schlittenrückführung auf die
+												Gesamtbeschleunigung kontinuierlich sinkt.</p>
+										</td>
+										<td align="center" width="50%">
+											<img src="/static/img/MechSys/K22.png" width="100%">
+											<p>Aufgrund der Massenträgheit des Pendels lenkt dieses aus und die
+												Beschleunigung aufgrund der Rückführung des Pendelwinkels überwiegt ab
+												einer gewissen Auslenkung den Anteil des Schlittens. Nun nähert sich der
+												Schlitten der Sollposition an.</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" width="50%" style="border-right: 1px solid #ddd;">
+											<img src="/static/img/MechSys/K13.png" width="70%">
+											<p> Aufgrund der Beschleunigung des Schlittens zur Stabilisierung des
+												Pendels bewegt sich dieser wieder von der Sollposition weg. Diese wird
+												nicht erreicht.
+										</td>
+										<td align="center" width="50%">
+											<img src="/static/img/MechSys/K23.png" width="100%">
+											<p>Kurz vor dem Erreichen der Solllage, ist das Pendel in die andere
+												Richtung übergeschwungen und die resultierende Beschleunigung führt zum
+												Abbremsen des Schlittens.</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" width="50%" style="border-right: 1px solid #ddd;">
+										</td>
+										<td align="center" width="50%">
+											<img src="/static/img/MechSys/K24.png" width="100%">
+											<p>Die Solllage wird erreicht.</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-2 col-md-1 hidden-sm hidden-xs">
+		</div>
+	</div>
+	</div>
+	</div>
+</body>
+
+</html>
+<script src="/static/js/custom/base.js"></script>
+<script>
+</script>
