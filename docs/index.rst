@@ -17,7 +17,9 @@ Beschreibung
 
 **Allgmemeines**
 
-Ein Remote Laboratory (ReLab) dient dazu echte Prüfstände zum Fernzugriff zur Verfügung zu stellen. Am Institut für Mechatronische Systeme wird vorlesungsbegleitend zu den Veranstaltungen Mechatronische Systeme, Robotik I und Robotik II ein ReLab ergänzend zur freiwilligen Bearbeitung angeboten. Der Zugriff erfolgt dabei über eine eigens eingerichtete Homepage (welche in diesem Fall nur aus dem Uni-Netz heraus erreichbar ist): https://relab.imes.uni-hannover.de/
+Ein Remote Laboratory (ReLab) dient dazu echte Prüfstände zum Fernzugriff zur Verfügung zu stellen. Am Institut für Mechatronische Systeme wird vorlesungsbegleitend zu den Veranstaltungen Mechatronische Systeme, Robotik I und Robotik II ein ReLab ergänzend zur freiwilligen Bearbeitung angeboten.
+Der Zugriff erfolgt dabei über eine eigens eingerichtete Homepage (welche in diesem Fall nur aus dem Uni-Netz heraus erreichbar ist): https://relab.imes.uni-hannover.de/.
+Die Umsetzung ist examplarisch für die Lehrveranstaltung *Robotik I* in diesem `Video <https://www.youtube.com/watch?v=rsq0pxJQl0s/>`_ vorgestellt.
 
 Das Remote Laboratory einer Lehrveranstaltung umfasst in den veröffentlichten Beispielen 4 Laborversuche, die aufeinander thematisch aufbauen. Es können die Labore jedoch in beliebiger Reihenfolge absolviert werden. Jeder Laborversuch besteht aus Aufgaben und ggf. einer „Challenge“. Letztere wird freigeschaltet, sobald die Aufgaben vollständig und richtig bearbeitet sind. In dieser bekommen die Studierenden die Möglichkeit für ihre Lösungen, deren Güte individuell bewertet und bepunktet wird, Zusatzpunkte zu erreichen, um im Ranking (auf der Hauptseite abgebildet) aufzusteigen. In der Regel werden je gelöster Aufgabe z.B. 500 Punkte vergeben und in der Challenge variable, erfolgsabhängige Punktzahlen.
 
