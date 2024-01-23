@@ -1,5 +1,6 @@
 # ReLab Server
--------------
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Platform: Ubuntu](https://img.shields.io/badge/Platform-Ubuntu-orange)]()
+---------------------------------------------
 
 Dieses Repository enthält den (Web-) Hauptserver für das Remote Laboratory "ReLab".
 
@@ -429,3 +430,7 @@ make html
 ```
 
 Die Anleitung kann über die Datei index.html in einem beliebigen Browser geöffnet werden.
+
+## License
+-----------
+This work is licensed under [MIT](https://opensource.org/licenses/MIT).
