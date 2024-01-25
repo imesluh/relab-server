@@ -19,8 +19,9 @@ sys.path.insert(0, os.path.join("..","db_server"))
 # -- Project information -----------------------------------------------------
 
 project = 'relab-server'
-copyright = '2023, Institut für Mechatronische Systeme'
-author = 'Institut für Mechatronische Systeme'
+#copyright = '2023, Institut für Mechatronische Systeme'
+copyright = '2023, Institut für Mechatronische Systeme. CC-BY-4.0 Lizenz'
+author = 'Tim Sterneck'
 
 
 # -- General configuration ---------------------------------------------------
@@ -52,6 +53,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+html_show_copyright = False
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
