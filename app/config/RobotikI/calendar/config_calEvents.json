@@ -80,5 +80,14 @@
 				"End": "2023-01-18T19:30:00",
 				"Edit": false,
 				"Color": "#3A3A3A"
+			},
+			{
+
+				"Name": "Event",
+				"Title": "Versuchsstand geblockt",
+				"Start": "2024-01-25T08:00:00",
+				"End": "2024-01-26T18:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
 			}
 ]

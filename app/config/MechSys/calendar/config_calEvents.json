@@ -22,5 +22,13 @@
 				"End": "2023-01-23T20:00:00",
 				"Edit": false,
 				"Color": "#3A3A3A"
+			},
+			{
+				"Name": "Event",
+				"Title": "Pendel derzeit nicht funktionsfähig",
+				"Start": "2024-01-25T10:00:00",
+				"End": "2024-01-26T15:00:00",
+				"Edit": false,
+				"Color": "#3A3A3A"
 			}
 ]
